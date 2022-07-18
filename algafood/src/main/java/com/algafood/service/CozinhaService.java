@@ -13,8 +13,12 @@ public class CozinhaService {
 
     @Autowired
     private CozinhaRepository cozinhaRepository;
-    
-    public List<Cozinha> listar(){
+
+    public List<Cozinha> listar() {
         return cozinhaRepository.findAll();
+    }
+
+    public Cozinha buscarPorId(Long cozinhaId){
+        return cozinhaRepository.findById(cozinhaId).orElseThrow();
     }
 }

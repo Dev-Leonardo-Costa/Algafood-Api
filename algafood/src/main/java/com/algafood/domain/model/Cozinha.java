@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @JsonRootName("cozinha")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -17,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Cozinha {
 
-
+	
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,27 +28,6 @@ public class Cozinha {
   
     @Column(nullable = false)
     private String nome;
-
-
-	public Long getId() {
-		return id;
-	}
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-	public String getNome() {
-		return nome;
-	}
-
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
 }
 
 

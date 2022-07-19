@@ -1,4 +1,4 @@
-package com.algafood.model;
+package com.algafood.domain.model;
 
 import java.util.List;
 

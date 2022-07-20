@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 public class Permissao {
 
+	@EqualsAndHashCode.Include
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

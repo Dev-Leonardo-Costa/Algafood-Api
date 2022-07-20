@@ -10,8 +10,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+
 
 @JsonRootName("cozinha")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -19,7 +18,6 @@ import lombok.Setter;
 @Entity
 public class Cozinha {
 
-	
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

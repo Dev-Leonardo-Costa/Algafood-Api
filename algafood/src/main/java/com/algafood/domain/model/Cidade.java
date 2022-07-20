@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Data
 @Entity
 public class Cidade {
-
+	
     @EqualsAndHashCode.Include
     @Id
     @Column(name = "id", nullable = false)

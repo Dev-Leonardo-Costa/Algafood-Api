@@ -5,6 +5,10 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+@JsonRootName("estado")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
 @Entity

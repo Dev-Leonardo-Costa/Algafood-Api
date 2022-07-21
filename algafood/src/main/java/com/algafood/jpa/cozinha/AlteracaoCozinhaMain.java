@@ -1,4 +1,4 @@
-package com.algafood.jpa;
+package com.algafood.jpa.cozinha;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -16,6 +16,8 @@ public class AlteracaoCozinhaMain {
 				.run(args);
 		
 		CozinhaRepository cozinhas = applicationContext.getBean(CozinhaRepository.class);
+		
+		
 		
 		Cozinha cozinha = new Cozinha();
 		cozinha.setId(1L);

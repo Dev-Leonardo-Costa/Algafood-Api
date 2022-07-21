@@ -1,24 +1,24 @@
-package com.algafood.jpa;
+package com.algafood.jpa.estado;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
+
 import com.algafood.AlgafoodApplication;
-import com.algafood.domain.model.Cozinha;
-import com.algafood.domain.repository.CozinhaRepository;
+import com.algafood.domain.model.Estado;
+import com.algafood.domain.repository.EstadoRepository;
 
-public class ExclusaoCozinhaMain {
+public class BuscaEstadoMain {
 
+	
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = new SpringApplicationBuilder(AlgafoodApplication.class)
 				.web(WebApplicationType.NONE)
 				.run(args);
 		
-		CozinhaRepository cozinhas = applicationContext.getBean(CozinhaRepository.class);
+		EstadoRepository estados = applicationContext.getBean(EstadoRepository.class);
 		
-		Cozinha cozinha = new Cozinha();
-		cozinha.setId(1L);
-		
-		cozinhas.remover(cozinha);
+		Estado estado = estados.buscaPorId(1L);
+		System.out.println(estado.getNome());
 	}
 }

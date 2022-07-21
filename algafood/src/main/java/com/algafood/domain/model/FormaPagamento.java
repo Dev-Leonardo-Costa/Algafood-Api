@@ -12,7 +12,7 @@ public class FormaPagamento {
 
     @EqualsAndHashCode.Include
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

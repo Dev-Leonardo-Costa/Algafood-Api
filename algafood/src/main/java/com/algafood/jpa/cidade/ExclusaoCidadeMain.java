@@ -1,6 +1,4 @@
-package com.algafood.jpa;
-
-import java.util.List;
+package com.algafood.jpa.cidade;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -10,19 +8,25 @@ import com.algafood.AlgafoodApplication;
 import com.algafood.domain.model.Cidade;
 import com.algafood.domain.repository.CidadeRepository;
 
-public class ConsultaCidadeMain {
+public class ExclusaoCidadeMain {
 
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = new SpringApplicationBuilder(AlgafoodApplication.class)
-				.web(WebApplicationType.NONE)
-				.run(args);
-		
+				.web(WebApplicationType.NONE).run(args);
+
 		CidadeRepository cidades = applicationContext.getBean(CidadeRepository.class);
-		
-		List<Cidade> todasCidades = cidades.buscarTodas();
-		
-		for (Cidade cidade : todasCidades) {
-			 System.out.printf("%s - %s\n", cidade.getNome(), cidade.getEstado().getNome());
+
+		System.out.println("\nAntes");
+		for (Cidade c : cidades.buscarTodas()) {
+			System.out.println("Cidade > " + c.getNome() + " Estado > " + c.getEstado().getNome());
 		}
+		
+		cidades.remover(cidades.buscarPorId(1L));
+		
+		System.out.println("\nDepois");
+		for (Cidade c : cidades.buscarTodas()) {
+			System.out.println("Cidade > " + c.getNome() + " Estado > " + c.getEstado().getNome());
+		}
+
 	}
 }

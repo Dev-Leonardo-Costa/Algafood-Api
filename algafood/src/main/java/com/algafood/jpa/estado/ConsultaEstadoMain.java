@@ -1,6 +1,6 @@
-package com.algafood.jpa;
+package com.algafood.jpa.estado;
 
-import java.util.function.Consumer;
+import java.util.List;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -10,8 +10,8 @@ import com.algafood.AlgafoodApplication;
 import com.algafood.domain.model.Estado;
 import com.algafood.domain.repository.EstadoRepository;
 
-public class AlteracaoEstadoMain {
-	
+public class ConsultaEstadoMain {
+
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = new SpringApplicationBuilder(AlgafoodApplication.class)
 				.web(WebApplicationType.NONE)
@@ -19,14 +19,13 @@ public class AlteracaoEstadoMain {
 		
 		EstadoRepository estados = applicationContext.getBean(EstadoRepository.class);
 		
-		System.out.println("\n Lista anterior "+ estados.buscarTodos()+ "\n");
+		List<Estado> todosEstados = estados.buscarTodos();
 		
-		Estado estado = new Estado();
-		estado.setId(1l);
-		estado.setNome("Caucaia");
+		todosEstados.stream().filter(estado -> estado.getClass().isArray());
+		todosEstados.forEach(estado -> System.out.println(estado.getNome()));
 		
-		estados.adicionar(estado);
-		
-		System.out.println("\n Lista atual "+ estados.buscarTodos()+ "\n");
+//		for (Estado estado : todosEstados) {
+//			System.out.println(estado.getNome());
+//		}
 	}
 }

@@ -1,23 +1,24 @@
-package com.algafood.jpa;
+package com.algafood.jpa.cozinha;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
-
 import com.algafood.AlgafoodApplication;
-import com.algafood.domain.model.Cidade;
-import com.algafood.domain.repository.CidadeRepository;
+import com.algafood.domain.model.Cozinha;
+import com.algafood.domain.repository.CozinhaRepository;
 
-public class BuscaCidadeMain {
+public class ExclusaoCozinhaMain {
 
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = new SpringApplicationBuilder(AlgafoodApplication.class)
 				.web(WebApplicationType.NONE)
 				.run(args);
 		
-		CidadeRepository cidades = applicationContext.getBean(CidadeRepository.class);
+		CozinhaRepository cozinhas = applicationContext.getBean(CozinhaRepository.class);
 		
-		Cidade estado = cidades.buscarPorId(1L);
-		System.out.println(estado.getNome());
+		Cozinha cozinha = new Cozinha();
+		cozinha.setId(1L);
+		
+		cozinhas.remover(cozinha);
 	}
 }

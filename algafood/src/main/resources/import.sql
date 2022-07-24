@@ -3,10 +3,10 @@ insert into cozinha (nome) values ('Brasileira');
 insert into cozinha (nome) values ('Japonesa');
 insert into cozinha (nome) values ('Mexicana');
 
-insert into restaurante (nome,taxa_frete, cozinha_id) VALUES ('Leo do pastel', 12, 1);
-insert into restaurante (nome,taxa_frete, cozinha_id) VALUES ('Sushimans', 200, 2);
-insert into restaurante (nome,taxa_frete, cozinha_id) VALUES ('Leo do pastel', 20.5, 1);
-insert into restaurante (nome,taxa_frete, cozinha_id) VALUES ('Leo do pastel', 13.6, 1);
+insert into restaurante (nome,taxa_frete, cozinha_id) VALUES ('Blue Elephant', 12, 1);
+insert into restaurante (nome,taxa_frete, cozinha_id) VALUES ('Coco Bambu', 200, 2);
+insert into restaurante (nome,taxa_frete, cozinha_id) VALUES ('Sr. Japa', 20.5, 1);
+insert into restaurante (nome,taxa_frete, cozinha_id) VALUES ('La Vicenta Vallejo', 13.6, 1);
 
 insert into estado (nome) values ('CEARA');
 insert into estado (nome) values ('MINAS GERAIS');

@@ -21,4 +21,8 @@ public class CadastroRestauranteService {
 	public List<Restaurante> buscarTodos(){
 		return restauranteRepository.buscarTodos();
 	}
+	
+	public Restaurante salvar(Restaurante restaurante) {
+		return restauranteRepository.adicionar(restaurante);
+	}
 }

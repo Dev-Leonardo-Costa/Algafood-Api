@@ -34,16 +34,16 @@ public class RestauranteRepositoryImpl implements RestauranteRepository {
 		return manager.merge(restaurante);
 	}
 
-//	@Transactional
-//	@Override
-//	public void remover(Long restauranteId) {
-//		
-//		Restaurante restaurante = buscarPorId(restauranteId);
-//		
-//		if (restaurante == null) {
-//			throw new EmptyResultDataAccessException(1);
-//		}
-//		manager.remove(restauranteId);
-//	}
+	@Transactional
+	@Override
+	public void excluir(Long restauranteId) {
+		
+		Restaurante restaurante = buscarPorId(restauranteId);
+		
+		if (restaurante == null) {
+			throw new EmptyResultDataAccessException(1);
+		}
+		manager.remove(restauranteId);
+	}
 
 }

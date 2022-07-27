@@ -16,8 +16,7 @@ public class ExclusaoEstadoMain {
 		
 		EstadoRepository estados = applicationContext.getBean(EstadoRepository.class);
 		System.out.println("\n"+ estados.buscarTodos()+"\n");
-		
-		estados.remover(estados.buscaPorId(1L));
+		estados.remover(1l);
 		
 		System.out.println("\n Atual "+ estados.buscarTodos()+"\n");
 	}	

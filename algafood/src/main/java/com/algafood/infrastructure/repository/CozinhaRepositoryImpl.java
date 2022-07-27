@@ -39,9 +39,11 @@ public class CozinhaRepositoryImpl implements CozinhaRepository{
 	@Override
 	public void remover(Long id) {
 		Cozinha cozinha = buscarPorId(id);
+		
 		if (cozinha == null) {
 			throw new EmptyResultDataAccessException(1);
 		}
+		
 		manager.remove(cozinha);
 	}
 }

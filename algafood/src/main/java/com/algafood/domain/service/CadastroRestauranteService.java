@@ -44,18 +44,16 @@ public class CadastroRestauranteService {
 
 		return restauranteRepository.adicionar(restaurante);
 	}
-	
-//	 public void excluir(Long restauranteId) {
-//         try {
-//            restauranteRepository.remover(restauranteId);
-//             
-//         } catch (EmptyResultDataAccessException e) {
-//             throw new EntidadeNaoEncontradaException(
-//                 String.format("Não existe um cadastro de cidade com código %d", restauranteId));
-//         
-//         } catch (DataIntegrityViolationException e) {
-//             throw new EntidadeEmUsoException(
-//                 String.format("Cidade de código %d não pode ser removida, pois está em uso", restauranteId));
-//         }
-//     }
+
+	public void excluir(Long restauranteId) {
+		try {
+			restauranteRepository.excluir(restauranteId);
+		} catch (EmptyResultDataAccessException e) {
+			throw new EntidadeNaoEncontradaException(
+					String.format("Não existe um cadastro de estado com código %d", restauranteId));
+		} catch (DataIntegrityViolationException e) {
+			throw new EntidadeEmUsoException(
+					String.format("Restaurante não pode ser removido: possui associação com cidade %d", restauranteId));
+		}
+	}
 }

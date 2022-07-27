@@ -21,7 +21,6 @@ public class CadastroCozinhaService {
 	}
 
 	public void excluir(Long cozinhaId) {
-		
 		try {
 			cozinhaRepository.remover(cozinhaId);
 			

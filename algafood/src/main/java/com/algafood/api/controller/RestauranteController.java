@@ -83,18 +83,19 @@ public class RestauranteController {
 		}
 	}
 
-//	@DeleteMapping("/{restauranteId}")
-//	public ResponseEntity<?> remover(@PathVariable Long restauranteId) {
-//		try {
-//			cadastroRestaurante.excluir(restauranteId);
-//			return ResponseEntity.noContent().build();
-//
-//		} catch (EntidadeNaoEncontradaException e) {
-//			return ResponseEntity.notFound().build();
-//
-//		} catch (EntidadeEmUsoException e) {
-//			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-//		}
-//	}
+	@DeleteMapping("/{estadoId}")
+	public ResponseEntity<?> excluir(@PathVariable Long estadoId) {
+		try {
+			cadastroRestaurante.excluir(estadoId);
+			return ResponseEntity.noContent().build();
+
+		} catch (EntidadeEmUsoException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+			
+		} catch (EntidadeNaoEncontradaException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+
+		}
+	}
 
 }

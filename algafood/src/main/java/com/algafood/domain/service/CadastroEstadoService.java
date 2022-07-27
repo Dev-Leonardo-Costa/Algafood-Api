@@ -37,7 +37,8 @@ public class CadastroEstadoService {
 			throw new EntidadeNaoEncontradaException(
 					String.format("Não existe um cadastro de estado com código %d", estadoId));
 		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoException(String.format("Estado não pode ser removido: possui associação com cidade %d", estadoId));
+			throw new EntidadeEmUsoException(
+					String.format("Estado não pode ser removido: possui associação com cidade %d", estadoId));
 		}
 	}
 }

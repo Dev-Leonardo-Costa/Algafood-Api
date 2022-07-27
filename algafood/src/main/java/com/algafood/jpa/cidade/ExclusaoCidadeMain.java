@@ -21,7 +21,7 @@ public class ExclusaoCidadeMain {
 			System.out.println("Cidade > " + c.getNome() + " Estado > " + c.getEstado().getNome());
 		}
 		
-		cidades.remover(cidades.buscarPorId(1L));
+//		cidades.remover(cidades.buscarPorId(1l));;
 		
 		System.out.println("\nDepois");
 		for (Cidade c : cidades.buscarTodas()) {

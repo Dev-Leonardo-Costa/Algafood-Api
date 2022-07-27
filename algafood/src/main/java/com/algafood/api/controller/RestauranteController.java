@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.algafood.domain.exception.EntidadeEmUsoException;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.model.Restaurante;
-import com.algafood.domain.repository.RestauranteRepository;
 import com.algafood.domain.service.CadastroRestauranteService;
 
 @RestController
@@ -29,18 +28,16 @@ public class RestauranteController {
 	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;
 
-	@Autowired
-	private RestauranteRepository restauranteRepository;
 
 	@GetMapping
 	public List<Restaurante> buscarTodos() {
-		return restauranteRepository.buscarTodos();
+		return cadastroRestaurante.buscarTodos();
 	}
 
 	@GetMapping("/{restauranteId}")
 	public ResponseEntity<Restaurante> buscarPorId(@PathVariable Long restauranteId) {
 
-		Restaurante restaurante = restauranteRepository.buscarPorId(restauranteId);
+		Restaurante restaurante = cadastroRestaurante.buscarPorId(restauranteId);
 
 		if (restaurante != null) {
 			return ResponseEntity.ok(restaurante);
@@ -67,7 +64,7 @@ public class RestauranteController {
 	public ResponseEntity<?> atualizar(@PathVariable Long restauranteId, @RequestBody Restaurante restaurante) {
 		try {
 
-			Restaurante restauranteAtual = restauranteRepository.buscarPorId(restauranteId);
+			Restaurante restauranteAtual = cadastroRestaurante.buscarPorId(restauranteId);
 
 			if (restauranteAtual != null) {
 				BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
@@ -83,19 +80,14 @@ public class RestauranteController {
 		}
 	}
 
-	@DeleteMapping("/{estadoId}")
-	public ResponseEntity<?> excluir(@PathVariable Long estadoId) {
+	@DeleteMapping("/{restauranteId}")
+	public ResponseEntity<?> remover(@PathVariable Long restauranteId) {
 		try {
-			cadastroRestaurante.excluir(estadoId);
+			cadastroRestaurante.excluir(restauranteId);
 			return ResponseEntity.noContent().build();
-
-		} catch (EntidadeEmUsoException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-			
 		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-
-		}
+			return ResponseEntity.notFound().build();
+		} 
 	}
 
 }

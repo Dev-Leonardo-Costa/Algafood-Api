@@ -19,7 +19,7 @@ public class CadastroRestauranteService {
 
 	@Autowired
 	private RestauranteRepository restauranteRepository;
-
+	
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 
@@ -50,10 +50,10 @@ public class CadastroRestauranteService {
 			restauranteRepository.excluir(restauranteId);
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe um cadastro de estado com código %d", restauranteId));
+					String.format("Não existe cadastro de cidade com esse código %d ", restauranteId));
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
-					String.format("Restaurante não pode ser removido: possui associação com cidade %d", restauranteId));
+					String.format("Cidade não pode ser removida: Possui associção com restaurante", restauranteId));
 		}
 	}
 }

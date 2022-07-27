@@ -9,6 +9,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.algafood.domain.model.Cidade;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.repository.RestauranteRepository;
 
@@ -37,13 +38,14 @@ public class RestauranteRepositoryImpl implements RestauranteRepository {
 	@Transactional
 	@Override
 	public void excluir(Long restauranteId) {
-		
 		Restaurante restaurante = buscarPorId(restauranteId);
-		
+				
 		if (restaurante == null) {
 			throw new EmptyResultDataAccessException(1);
 		}
-		manager.remove(restauranteId);
+		
+		manager.remove(restaurante);
+		
 	}
 
 }

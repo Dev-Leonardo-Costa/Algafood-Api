@@ -46,4 +46,6 @@ public class CozinhaRepositoryImpl implements CozinhaRepository{
 		
 		manager.remove(cozinha);
 	}
+	
+
 }

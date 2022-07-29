@@ -13,15 +13,14 @@ import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.repository.CozinhaRepository;
 
 @Component
-public class CozinhaRepositoryImpl implements CozinhaRepository{
-	
+public class CozinhaRepositoryImpl implements CozinhaRepository {
+
 	@PersistenceContext
 	private EntityManager manager;
 
 	@Override
 	public List<Cozinha> buscarTodas() {
-		return manager.createQuery("from Cozinha", Cozinha.class)
-				.getResultList();
+		return manager.createQuery("from Cozinha", Cozinha.class).getResultList();
 	}
 
 	@Override
@@ -29,6 +28,13 @@ public class CozinhaRepositoryImpl implements CozinhaRepository{
 		return manager.find(Cozinha.class, id);
 	}
 	
+	@Override
+	public List<Cozinha> consultarPorNome(String nome){
+		return manager.createQuery("from Cozinha where nome like :nome", Cozinha.class)
+				.setParameter("nome","%" +nome +"%")
+				.getResultList();
+	}
+
 	@Transactional
 	@Override
 	public Cozinha adicionar(Cozinha cozinha) {
@@ -39,13 +45,12 @@ public class CozinhaRepositoryImpl implements CozinhaRepository{
 	@Override
 	public void remover(Long id) {
 		Cozinha cozinha = buscarPorId(id);
-		
+
 		if (cozinha == null) {
 			throw new EmptyResultDataAccessException(1);
 		}
-		
+
 		manager.remove(cozinha);
 	}
-	
 
 }

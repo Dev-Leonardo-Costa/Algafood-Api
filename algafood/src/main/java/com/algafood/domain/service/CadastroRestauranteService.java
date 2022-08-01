@@ -1,6 +1,7 @@
 package com.algafood.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,35 +20,33 @@ public class CadastroRestauranteService {
 
 	@Autowired
 	private RestauranteRepository restauranteRepository;
-	
+
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 
-	public Restaurante buscarPorId(Long restauranteId) {
-		return restauranteRepository.buscarPorId(restauranteId);
+	public Optional<Restaurante> buscarPorId(Long restauranteId) {
+		return restauranteRepository.findById(restauranteId);
 	}
 
 	public List<Restaurante> buscarTodos() {
-		return restauranteRepository.buscarTodos();
+		return restauranteRepository.findAll();
 	}
 
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
-		Cozinha cozinha = cozinhaRepository.buscarPorId(cozinhaId);
-
-		if (cozinha == null) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe cadastro de cozinha com código %d ", cozinhaId));
-		}
+		
+		Cozinha cozinha = cozinhaRepository.findById(cozinhaId)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException(
+				String.format("Não existe cadastro de cozinha com código %d ", cozinhaId)));
 
 		restaurante.setCozinha(cozinha);
 
-		return restauranteRepository.adicionar(restaurante);
+		return restauranteRepository.save(restaurante);
 	}
 
 	public void excluir(Long restauranteId) {
 		try {
-			restauranteRepository.excluir(restauranteId);
+			restauranteRepository.deleteById(restauranteId);
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
 					String.format("Não existe cadastro de cidade com esse código %d ", restauranteId));

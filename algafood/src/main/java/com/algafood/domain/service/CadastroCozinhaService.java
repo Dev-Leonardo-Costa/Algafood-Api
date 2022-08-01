@@ -1,6 +1,7 @@
 package com.algafood.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,20 +20,21 @@ public class CadastroCozinhaService {
 	private CozinhaRepository cozinhaRepository;
 
 	public List<Cozinha> buscarTodas() {
-		return cozinhaRepository.buscarTodas();
+		return cozinhaRepository.findAll();
 	}
 
-	public Cozinha buscarPorId(Long cozinhaId) {
-		return cozinhaRepository.buscarPorId(cozinhaId);
+	public Optional<Cozinha> buscarPorId(Long cozinhaId) {
+		return cozinhaRepository.findById(cozinhaId);
 	}
 
+	
 	public Cozinha salvar(Cozinha cozinha) {
-		return cozinhaRepository.adicionar(cozinha);
+		return cozinhaRepository.save(cozinha);
 	}
 
 	public void excluir(Long cozinhaId) {
 		try {
-			cozinhaRepository.remover(cozinhaId);
+			cozinhaRepository.deleteById(cozinhaId);
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
 					String.format("Estado não pode ser removido: possui associação com cidade %d", cozinhaId));
@@ -40,7 +42,7 @@ public class CadastroCozinhaService {
 
 		catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe um cadastro de estado com código %d", cozinhaId));
+					String.format("Não existe um cadastro de cozinha com código %d", cozinhaId));
 		}
 	}
 }

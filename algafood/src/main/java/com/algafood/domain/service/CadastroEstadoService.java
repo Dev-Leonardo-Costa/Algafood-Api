@@ -1,6 +1,7 @@
 package com.algafood.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,20 +20,20 @@ public class CadastroEstadoService {
 	private EstadoRepository estadoRepository;
 
 	public List<Estado> buscarTodos() {
-		return estadoRepository.buscarTodos();
+		return estadoRepository.findAll();
 	}
 
-	public Estado buscarPorId(Long estadoId) {
-		return estadoRepository.buscaPorId(estadoId);
+	public Optional<Estado> buscarPorId(Long estadoId) {
+		return estadoRepository.findById(estadoId);
 	}
 
 	public Estado salvar(Estado estado) {
-		return estadoRepository.adicionar(estado);
+		return estadoRepository.save(estado);
 	}
 
 	public void excluir(Long estadoId) {
 		try {
-			estadoRepository.remover(estadoId);
+			estadoRepository.deleteById(estadoId);
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
 					String.format("Não existe um cadastro de estado com código %d", estadoId));

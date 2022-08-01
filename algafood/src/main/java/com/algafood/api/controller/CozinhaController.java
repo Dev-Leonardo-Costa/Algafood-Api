@@ -3,6 +3,7 @@ package com.algafood.api.controller;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,26 +22,30 @@ import org.springframework.web.bind.annotation.RestController;
 import com.algafood.domain.exception.EntidadeEmUsoException;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.model.Cozinha;
+import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.service.CadastroCozinhaService;
 
 @RestController
 @RequestMapping("/cozinhas")
 public class CozinhaController {
+	
+	@Autowired
+	private CozinhaRepository cozinhaRepository;
 
 	@Autowired
 	private CadastroCozinhaService cadastroCozinhas;
 
 	@GetMapping
 	public List<Cozinha> buscarTodas() {
-		return cadastroCozinhas.buscarTodas();
+		return cozinhaRepository.findAll();
 	}
 
 	@GetMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> buscarPorId(@PathVariable Long cozinhaId) {
-		Cozinha cozinha = cadastroCozinhas.buscarPorId(cozinhaId);
+		Optional<Cozinha> cozinha = cozinhaRepository.findById(cozinhaId);
 
-		if (cozinha != null) {
-			return ResponseEntity.ok(cozinha);
+		if (cozinha.isPresent()) {
+			return ResponseEntity.ok(cozinha.get());
 		}
 
 		return ResponseEntity.notFound().build();
@@ -56,13 +61,13 @@ public class CozinhaController {
 	@PutMapping("/{cozinhaId}")
 	public ResponseEntity<?> atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha) {
 
-		Cozinha cozinhaAtual = cadastroCozinhas.buscarPorId(cozinhaId);
+		 Optional<Cozinha> cozinhaAtual = cozinhaRepository.findById(cozinhaId);
 
-		if (cozinhaAtual != null) {
-			BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
+		if (cozinhaAtual.isPresent()) {
+			BeanUtils.copyProperties(cozinha, cozinhaAtual.get(), "id");
 
-			cadastroCozinhas.salvar(cozinhaAtual);
-			return ResponseEntity.ok(cozinhaAtual);
+			Cozinha cozinhaSalva = cadastroCozinhas.salvar(cozinhaAtual.get());
+			return ResponseEntity.ok(cozinhaSalva);
 		}
 
 		return ResponseEntity.notFound().build();

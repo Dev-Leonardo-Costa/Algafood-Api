@@ -1,6 +1,7 @@
 package com.algafood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.algafood.domain.exception.EntidadeEmUsoException;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.model.Cidade;
+import com.algafood.domain.repository.CidadeRepository;
 import com.algafood.domain.service.CadastroCidadeService;
 
 @RestController
@@ -26,19 +28,22 @@ public class CidadeController {
 
 	@Autowired
 	private CadastroCidadeService cadastroCidades;
+	
+	@Autowired
+	private CidadeRepository cidadeRepository;
 
 	@GetMapping
 	public List<Cidade> buscar() {
-		return cadastroCidades.buscarTodas();
+		return cidadeRepository.findAll();
 	}
 
 	@GetMapping("/{cidadeId}")
 	public ResponseEntity<Cidade> buscarPorId(@PathVariable Long cidadeId) {
 
-		Cidade cidade = cadastroCidades.buscarPorId(cidadeId);
+		Optional<Cidade> cidade = cidadeRepository.findById(cidadeId);
 
-		if (cidade != null) {
-			return ResponseEntity.ok(cidade);
+		if (cidade.isPresent()) {
+			return ResponseEntity.ok(cidade.get());
 		}
 
 		return ResponseEntity.notFound().build();
@@ -70,13 +75,13 @@ public class CidadeController {
 
 	@PutMapping("/{cidadeId}")
 	public ResponseEntity<Cidade> atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade) {
-		Cidade cidadeAtual = cadastroCidades.buscarPorId(cidadeId);
+		Optional<Cidade> cidadeAtual = cidadeRepository.findById(cidadeId);
 
-		if (cidadeAtual != null) {
-			BeanUtils.copyProperties(cidade, cidadeAtual, "id");
+		if (cidadeAtual.isPresent()) {
+			BeanUtils.copyProperties(cidade, cidadeAtual.get(), "id");
 
-			cidadeAtual = cadastroCidades.salvar(cidadeAtual);
-			return ResponseEntity.ok(cidadeAtual);
+			Cidade cidadeSalva = cadastroCidades.salvar(cidadeAtual.get());
+			return ResponseEntity.ok(cidadeSalva);
 		}
 
 		return ResponseEntity.notFound().build();

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.algafood.domain.exception.EntidadeEmUsoException;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.model.Estado;
-import com.algafood.domain.repository.CidadeRepository;
 import com.algafood.domain.repository.EstadoRepository;
 import com.algafood.domain.service.CadastroEstadoService;
 

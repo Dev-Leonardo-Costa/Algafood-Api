@@ -18,9 +18,9 @@ insert into cidade(nome, estado_id) values ('Araxá', 2);
 insert into cidade(nome, estado_id) values ('Boa viagem', 3);
 insert into cidade(nome, estado_id) values ('Duque de caxias', 4);
 
-insert into forma_pagamento(descricao) values ('CARTÃO DE CRÉDITO');
-insert into forma_pagamento(descricao) values ('CARTÃO DE DÉBITO');
-insert into forma_pagamento(descricao) values ('DINHEIRO');
+insert into forma_pagamento(descricao) values ('Cartão de crédito');
+insert into forma_pagamento(descricao) values ('Cartão de débito');
+insert into forma_pagamento(descricao) values ('Dinheiro');
 
 insert into permissao(nome, descricao) values ('CONSULTAR_COZINHAS','Permitir consultar cozinhas');
 insert into permissao(nome, descricao) values ('EDITAR_COZINHAS','Permitir editar cozinhas');

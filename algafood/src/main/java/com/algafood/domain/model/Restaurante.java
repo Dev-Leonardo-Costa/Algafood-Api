@@ -48,7 +48,7 @@ public class Restaurante {
 	@Embedded
 	private Endereco endereco;
 
-//  @JsonIgnore
+    @JsonIgnore
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
 

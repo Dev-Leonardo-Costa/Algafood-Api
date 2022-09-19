@@ -24,6 +24,8 @@ import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.service.CadastroCozinhaService;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.server.ServerWebInputException;
 
 @RestController
 @RequestMapping("/cozinhas")
@@ -92,6 +94,6 @@ public class CozinhaController {
 	@DeleteMapping("/{cozinhaId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public  void remover(@PathVariable Long cozinhaId) {
-		cadastroCozinhas.excluir(cozinhaId);
+			cadastroCozinhas.excluir(cozinhaId);
 	}
 }

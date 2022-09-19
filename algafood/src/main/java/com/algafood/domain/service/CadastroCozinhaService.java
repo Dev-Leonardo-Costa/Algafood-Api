@@ -37,7 +37,7 @@ public class CadastroCozinhaService {
 			cozinhaRepository.deleteById(cozinhaId);
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
-					String.format("Estado não pode ser removido: possui associação com cidade %d", cozinhaId));
+					String.format("Cozinha %d não pode ser removido: Encontra-se em uso ", cozinhaId ));
 		}
 
 		catch (EmptyResultDataAccessException e) {

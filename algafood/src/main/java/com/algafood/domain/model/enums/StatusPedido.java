@@ -1,4 +1,4 @@
-package com.algafood.domain.model;
+package com.algafood.domain.model.enums;
 
 public enum StatusPedido {
     CRIADO,

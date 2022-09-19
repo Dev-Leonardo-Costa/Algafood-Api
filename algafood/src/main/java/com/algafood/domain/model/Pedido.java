@@ -1,5 +1,6 @@
 package com.algafood.domain.model;
 
+import com.algafood.domain.model.enums.StatusPedido;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

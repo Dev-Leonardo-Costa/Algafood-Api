@@ -14,33 +14,30 @@ import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.repository.RestauranteRepository;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class CadastroRestauranteService {
-
+	public static final String MSG_RESTAURANTE_NAO_ENCONTRADO
+			= "Não existe um cadastro de restaurante com código %d";
+	public static final String MSG_RESTAURANTE_ENCONTRA_SE_EM_USO
+			= "Restaurante %d não pode ser removido: Encontra-se em uso";
 	@Autowired
 	private RestauranteRepository restauranteRepository;
-
 	@Autowired
-	private CozinhaRepository cozinhaRepository;
-
+	private CadastroCozinhaService cadastroCozinha;
 	public Optional<Restaurante> buscarPorId(Long restauranteId) {
 		return restauranteRepository.findById(restauranteId);
 	}
-
 	public List<Restaurante> buscarTodos() {
 		return restauranteRepository.findAll();
 	}
 
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
-		
-		Cozinha cozinha = cozinhaRepository.findById(cozinhaId)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException(
-				String.format("Não existe cadastro de cozinha com código %d ", cozinhaId)));
-
+		Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
 		restaurante.setCozinha(cozinha);
-
 		return restauranteRepository.save(restaurante);
 	}
 
@@ -49,10 +46,21 @@ public class CadastroRestauranteService {
 			restauranteRepository.deleteById(restauranteId);
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe cadastro de cidade com esse código %d ", restauranteId));
+					String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId));
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
-					String.format("Cidade não pode ser removida: Possui associção com restaurante", restauranteId));
+					String.format(MSG_RESTAURANTE_ENCONTRA_SE_EM_USO, restauranteId));
 		}
+	}
+
+//	public  Restaurante buscarRestauranteOuFalhar(Long restauranteId){
+//		return restauranteRepository.findById(restauranteId)
+//				.orElseThrow(() -> new EntidadeNaoEncontradaException(
+//						String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
+//	}
+	public Restaurante buscarRestauranteOuFalhar(Long restauranteId) {
+		return restauranteRepository.findById(restauranteId)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException(
+						String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
 	}
 }

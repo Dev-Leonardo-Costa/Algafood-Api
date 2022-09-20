@@ -30,24 +30,14 @@ public class EstadoController {
 	@Autowired
 	private CadastroEstadoService cadastroEstados;
 
-	@Autowired
-	private EstadoRepository estadoRepository;
-
 	@GetMapping
 	public List<Estado> buscarTodos() {
 		return cadastroEstados.buscarTodos();
 	}
 
 	@GetMapping("/{estadoId}")
-	public ResponseEntity<Estado> buscarPorId(@PathVariable Long estadoId) {
-		Optional<Estado> estado = estadoRepository.findById(estadoId);
-
-		if (estado.isPresent()) {
-			return ResponseEntity.ok(estado.get());
-		}
-
-//		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		return ResponseEntity.notFound().build();
+	public Estado buscarPorId(@PathVariable Long estadoId) {
+		return cadastroEstados.buscarEstadoOuFalhar(estadoId);
 	}
 
 	@PostMapping
@@ -57,32 +47,16 @@ public class EstadoController {
 	}
 
 	@PutMapping("/{estadoId}")
-	public ResponseEntity<Estado> atualizar(@PathVariable Long estadoId, @RequestBody Estado estado) {
-		Optional<Estado> estadoAtual = estadoRepository.findById(estadoId);
-
-		if (estadoAtual.isPresent()) {
-			BeanUtils.copyProperties(estado, estadoAtual.get(), "id");
-
-			Estado estadoSalva = cadastroEstados.salvar(estadoAtual.get());
-			return ResponseEntity.ok(estadoSalva);
-		}
-
-		return ResponseEntity.notFound().build();
+	public Estado atualizar(@PathVariable Long estadoId, @RequestBody Estado estado) {
+		Estado estadoAtual = cadastroEstados.buscarEstadoOuFalhar(estadoId);
+		BeanUtils.copyProperties(estado, estadoAtual, "id");
+		return cadastroEstados.salvar(estadoAtual);
 	}
 
 	@DeleteMapping("/{estadoId}")
-	public ResponseEntity<?> excluir(@PathVariable Long estadoId) {
-		try {
-			cadastroEstados.excluir(estadoId);
-			return ResponseEntity.noContent().build();
-
-		} catch (EntidadeEmUsoException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-
-		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-
-		}
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void remover(@PathVariable Long estadoId) {
+		cadastroEstados.excluir(estadoId);
 	}
 
 }

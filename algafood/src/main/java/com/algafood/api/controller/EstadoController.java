@@ -42,7 +42,7 @@ public class EstadoController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Estado salvar(@RequestBody Estado estado) {
+	public Estado adicionar(@RequestBody Estado estado) {
 		return cadastroEstados.salvar(estado);
 	}
 

@@ -33,14 +33,20 @@ public class CidadeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> salvar(@RequestBody Cidade cidade) {
-        try {
-            cidade = cadastroCidades.salvar(cidade);
-            return ResponseEntity.status(HttpStatus.CREATED).body(cidade);
-        } catch (EntidadeNaoEncontradaException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cidade adicionar(@RequestBody Cidade cidade){
+       return  cadastroCidades.salvar(cidade);
     }
+
+//    @PostMapping
+//    public ResponseEntity<?> salvar(@RequestBody Cidade cidade) {
+//        try {
+//            cidade = cadastroCidades.salvar(cidade);
+//            return ResponseEntity.status(HttpStatus.CREATED).body(cidade);
+//        } catch (EntidadeNaoEncontradaException e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//    }
 
     @DeleteMapping("/{cidadeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

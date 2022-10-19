@@ -1,5 +1,7 @@
 package com.algafood.api.controller;
 
+import com.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.service.CadastroCozinhaService;
@@ -29,16 +31,21 @@ public class RestauranteController {
 
     @GetMapping("/{restauranteId}")
     public Restaurante buscarPorId(@PathVariable Long restauranteId) {
-       return  cadastroRestaurante.buscarRestauranteOuFalhar(restauranteId);
+        return cadastroRestaurante.buscarRestauranteOuFalhar(restauranteId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Restaurante adicionar(@RequestBody Restaurante restaurante) {
-        Long cozinhaId = restaurante.getCozinha().getId();
-        Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
-        restaurante.setCozinha(cozinha);
-        return cadastroRestaurante.salvar(restaurante);
+        try {
+            Long cozinhaId = restaurante.getCozinha().getId();
+            Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
+            restaurante.setCozinha(cozinha);
+            return cadastroRestaurante.salvar(restaurante);
+        } catch (EntidadeNaoEncontradaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
+
     }
 
     @DeleteMapping("/{restauranteId}")
@@ -51,7 +58,11 @@ public class RestauranteController {
     public Restaurante atualizar(@PathVariable Long restauranteId, @RequestBody Restaurante restaurante) {
         Restaurante restauranteAtual = cadastroRestaurante.buscarRestauranteOuFalhar(restauranteId);
         BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
-        return  cadastroRestaurante.salvar(restauranteAtual);
+        try {
+            return cadastroRestaurante.salvar(restauranteAtual);
+        } catch (EntidadeNaoEncontradaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
     }
 
 //    @PatchMapping("/{restauranteId}")

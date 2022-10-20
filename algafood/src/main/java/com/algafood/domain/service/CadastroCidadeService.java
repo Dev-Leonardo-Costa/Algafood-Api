@@ -1,25 +1,23 @@
 package com.algafood.domain.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.algafood.domain.exception.CidadeNaoEncontradoException;
+import com.algafood.domain.exception.EntidadeEmUsoException;
+import com.algafood.domain.model.Cidade;
+import com.algafood.domain.model.Estado;
+import com.algafood.domain.repository.CidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.algafood.domain.exception.EntidadeEmUsoException;
-import com.algafood.domain.exception.EntidadeNaoEncontradaException;
-import com.algafood.domain.model.Cidade;
-import com.algafood.domain.model.Estado;
-import com.algafood.domain.repository.CidadeRepository;
-import com.algafood.domain.repository.EstadoRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CadastroCidadeService {
 	public static final String MSG_CIDADE_NAO_ENCONTRADA
 			= "Não existe cadastro de cidade com esse código %d ";
-	public static final String MSG_CIDADE_ENCONTRA_SE_EM_uso
+	public static final String MSG_CIDADE_ENCONTRA_SE_EM_USO
 			= "Cidade %d não pode ser removida: Encontra-se em uso";
 	@Autowired
 	private CidadeRepository cidadeRepository;
@@ -44,16 +42,16 @@ public class CadastroCidadeService {
 		try {
 			cidadeRepository.deleteById(cidadeId);
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(
+			throw new CidadeNaoEncontradoException(
 					String.format(MSG_CIDADE_NAO_ENCONTRADA, cidadeId));
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
-					String.format(MSG_CIDADE_ENCONTRA_SE_EM_uso, cidadeId));
+					String.format(MSG_CIDADE_ENCONTRA_SE_EM_USO, cidadeId));
 		}
 	}
 	public Cidade buscarCidadeOuFalhar(Long cidadeId){
 		return  cidadeRepository.findById(cidadeId)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException(
+				.orElseThrow(() -> new CidadeNaoEncontradoException(
 						String.format(MSG_CIDADE_NAO_ENCONTRADA, cidadeId)));
 	}
 

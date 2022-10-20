@@ -1,20 +1,16 @@
 package com.algafood.api.controller;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.algafood.domain.exception.CidadeNaoEncontradoException;
+import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
+import com.algafood.domain.model.Cidade;
+import com.algafood.domain.service.CadastroCidadeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.algafood.domain.exception.EntidadeEmUsoException;
-import com.algafood.domain.exception.EntidadeNaoEncontradaException;
-import com.algafood.domain.model.Cidade;
-import com.algafood.domain.repository.CidadeRepository;
-import com.algafood.domain.service.CadastroCidadeService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/cidades")
@@ -38,7 +34,7 @@ public class CidadeController {
     public Cidade adicionar(@RequestBody Cidade cidade){
         try {
             return  cadastroCidades.salvar(cidade);
-        }catch (EntidadeNaoEncontradaException ex){
+        }catch (CidadeNaoEncontradoException ex){
             throw new NegocioException(ex.getMessage());
         }
     }
@@ -56,7 +52,7 @@ public class CidadeController {
 
         try {
             return cadastroCidades.salvar(cidadeAtual);
-        }catch (EntidadeNaoEncontradaException ex){
+        }catch (CidadeNaoEncontradoException ex){
             throw new NegocioException(ex.getMessage());
         }
     }

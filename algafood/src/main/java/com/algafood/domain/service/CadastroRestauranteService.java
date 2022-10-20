@@ -3,6 +3,7 @@ package com.algafood.domain.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.algafood.domain.exception.RestauranteNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -45,7 +46,7 @@ public class CadastroRestauranteService {
 		try {
 			restauranteRepository.deleteById(restauranteId);
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(
+			throw new RestauranteNaoEncontradoException(
 					String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId));
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
@@ -53,14 +54,9 @@ public class CadastroRestauranteService {
 		}
 	}
 
-//	public  Restaurante buscarRestauranteOuFalhar(Long restauranteId){
-//		return restauranteRepository.findById(restauranteId)
-//				.orElseThrow(() -> new EntidadeNaoEncontradaException(
-//						String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
-//	}
 	public Restaurante buscarRestauranteOuFalhar(Long restauranteId) {
 		return restauranteRepository.findById(restauranteId)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException(
+				.orElseThrow(() -> new RestauranteNaoEncontradoException(
 						String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
 	}
 }

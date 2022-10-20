@@ -3,6 +3,8 @@ package com.algafood.domain.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.algafood.domain.exception.EstadoNaoEncontradoException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -31,6 +33,7 @@ public class CadastroEstadoService {
 	}
 
 	public Estado salvar(Estado estado) {
+
 		return estadoRepository.save(estado);
 	}
 
@@ -38,7 +41,7 @@ public class CadastroEstadoService {
 		try {
 			estadoRepository.deleteById(estadoId);
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(
+			throw new EstadoNaoEncontradoException(
 					String.format(MSG_ESTADO_NAO_ENCONTRADO, estadoId));
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
@@ -47,7 +50,7 @@ public class CadastroEstadoService {
 	}
 	public Estado buscarEstadoOuFalhar(Long estadoId){
 		return estadoRepository.findById(estadoId)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException(
+				.orElseThrow(() -> new EstadoNaoEncontradoException(
 						String.format(MSG_ESTADO_NAO_ENCONTRADO, estadoId)));
 	}
 }

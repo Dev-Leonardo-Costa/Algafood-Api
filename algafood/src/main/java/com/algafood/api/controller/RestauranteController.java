@@ -2,18 +2,18 @@ package com.algafood.api.controller;
 
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
+import com.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.service.CadastroCozinhaService;
 import com.algafood.domain.service.CadastroRestauranteService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -42,7 +42,7 @@ public class RestauranteController {
             Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
             restaurante.setCozinha(cozinha);
             return cadastroRestaurante.salvar(restaurante);
-        } catch (EntidadeNaoEncontradaException ex) {
+        } catch (RestauranteNaoEncontradoException ex) {
             throw new NegocioException(ex.getMessage());
         }
 

@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 @Builder
 public class Problem {
 
+    private LocalDateTime tamestamp;
     private Integer status;
     private String type;
     private String title;
     private String detail;
-
+    private String userMessage;
 
 }

@@ -27,6 +27,10 @@ import static com.fasterxml.jackson.databind.JsonMappingException.Reference;
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
+    public static final String MSG_ERRO_GENERICA_USUARIO_FINAL
+            = "Ocorreu um erro interno inesperado no sistema. Tente novamente e se "
+            + "o problema persistir, entre em contato com o administrador do sistema.";
+
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
@@ -43,7 +47,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
         String detail = "O corpo da requisição está inválido. Verifique o erro de sintaxe.";
         Problem problem = createProblemBuilder(status, problemType, detail)
-                .userMessage(detail)
+                .tamestamp(LocalDateTime.now())
+                .userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
                 .build();
 
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
@@ -70,7 +75,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         Problem problem = createProblemBuilder(status, problemType, detail)
                 .tamestamp(LocalDateTime.now())
-                .userMessage(detail)
+                .userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
                 .build();
 
         return handleExceptionInternal(ex, problem, headers, status, request);
@@ -84,14 +89,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                     .tamestamp(LocalDateTime.now())
                     .title(status.getReasonPhrase())
                     .status(status.value())
-                    .userMessage("Erro esta no metodo handleExceptionInternal")
+                    .userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
                     .build();
         } else if (body instanceof String) {
             body = Problem.builder()
                     .tamestamp(LocalDateTime.now())
                     .title((String) body)
                     .status(status.value())
-                    .userMessage("Erro esta no metodo handleExceptionInternal")
+                    .userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
                     .build();
         }
 
@@ -150,7 +155,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 "a",ex.getValue(),ex.getTargetType().getSimpleName());
         Problem problem = createProblemBuilder(status, problemType, detail)
                 .tamestamp(LocalDateTime.now())
-                .userMessage(detail)
+                .userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
                 .build();
 
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
@@ -165,7 +170,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         Problem problem = createProblemBuilder(status, problemType, detail)
                 .tamestamp(LocalDateTime.now())
-                .userMessage(detail)
+                .userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
                 .build();
 
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
@@ -176,9 +181,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         ProblemType problemType = ProblemType.ERRO_DE_SISTEMA;
-        String detail = "Ocorreu um erro interno inesperado no sistema. "
-                + "Tente novamente e se o problema persistir, entre em contato "
-                + "com o administrador do sistema.";
+        String detail = MSG_ERRO_GENERICA_USUARIO_FINAL;
         ex.printStackTrace();
 
         Problem problem = createProblemBuilder(status, problemType, detail)
@@ -198,7 +201,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 + "Corrija ou remova essa propriedade e tente novamente.", path);
         Problem problem = createProblemBuilder(status, problemType, detail)
                 .tamestamp(LocalDateTime.now())
-                .userMessage(detail)
+                .userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
                 .build();
 
         return handleExceptionInternal(ex, problem, headers, status, request);

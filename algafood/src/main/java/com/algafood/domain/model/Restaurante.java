@@ -22,6 +22,8 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
 import com.algafood.Grups;
 import org.hibernate.annotations.CreationTimestamp;
@@ -43,7 +45,7 @@ public class Restaurante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank(message = "Não pode ser nulo e nem em branco", groups = Grups.CadastroRestaurante.class)
+	@NotBlank(message = "Não pode ser nulo e nem em branco")
 	@Column(nullable = false)
 	private String nome;
 
@@ -55,7 +57,8 @@ public class Restaurante {
 //	@JsonIgnore
 //	@JsonIgnoreProperties("hibernateLazyInitializer")
 	@Valid
-	@NotNull(groups = Grups.CadastroRestaurante.class)
+	@ConvertGroup(from = Default.class, to = Grups.CozinhaId.class)
+	@NotNull
 	@ManyToOne //(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cozinha_id", nullable = false)
 	private Cozinha cozinha;

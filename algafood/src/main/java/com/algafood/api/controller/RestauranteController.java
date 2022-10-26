@@ -1,5 +1,6 @@
 package com.algafood.api.controller;
 
+import com.algafood.Grups;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.exception.RestauranteNaoEncontradoException;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.util.ReflectionUtils;
 
@@ -45,7 +47,7 @@ public class RestauranteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Restaurante adicionar(@RequestBody @Valid Restaurante restaurante) {
+    public Restaurante adicionar(@RequestBody @Validated(Grups.CadastroRestaurante.class) Restaurante restaurante) {
         try {
             Long cozinhaId = restaurante.getCozinha().getId();
             Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);

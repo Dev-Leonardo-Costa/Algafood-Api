@@ -1,8 +1,10 @@
 package com.algafood.domain.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.algafood.Grups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
@@ -19,13 +21,14 @@ import java.util.List;
 @Entity
 public class Cozinha {
 
-    @NotNull
+    @NotNull(groups = Grups.CadastroRestaurante.class)
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
 
+    @NotBlank
     @Column(nullable = false)
     private String nome;
    
@@ -33,6 +36,4 @@ public class Cozinha {
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "cozinha")
 //    private List<Restaurante> restaurantes = new ArrayList<>();
-    
-    
 }

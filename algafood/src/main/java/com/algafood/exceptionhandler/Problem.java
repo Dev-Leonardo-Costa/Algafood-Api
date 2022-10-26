@@ -10,8 +10,8 @@ import java.util.List;
 @Builder
 public class Problem {
 
-    private LocalDateTime tamestamp;
     private Integer status;
+    private LocalDateTime tamestamp;
     private String type;
     private String title;
     private String detail;

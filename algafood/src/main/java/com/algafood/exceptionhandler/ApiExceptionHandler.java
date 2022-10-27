@@ -72,7 +72,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         }
         return super.handleTypeMismatch(ex, headers, status, request);
     }
-
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex,
                                                                    HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -205,12 +204,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                         + "que é de um tipo inválido. Corrija e informe um valor compatível com o tipo %s",
                 ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName());
 
-        Problem problem = createProblemBuilder(status, problemType, detail)
-                .tamestamp(LocalDateTime.now())
-                .userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
-                .build();
+        Problem problem = createProblemBuilder(status, problemType, detail).build();
 
-        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+        return handleExceptionInternal(ex, problem, headers, status, request);
     }
 
     @ExceptionHandler(Exception.class)

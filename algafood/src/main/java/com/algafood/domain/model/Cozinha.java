@@ -28,7 +28,7 @@ public class Cozinha {
     @Column(nullable = false)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Não pode ser nulo nem branco")
     @Column(nullable = false)
     private String nome;
    

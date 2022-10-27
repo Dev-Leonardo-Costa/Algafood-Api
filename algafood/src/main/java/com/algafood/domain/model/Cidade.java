@@ -23,7 +23,7 @@ public class Cidade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Não pode ser nulo nem branco")
+    @NotBlank
     @Column(nullable = false)
     private String nome;
 

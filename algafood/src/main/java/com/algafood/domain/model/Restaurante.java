@@ -45,7 +45,7 @@ public class Restaurante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank(message = "Não pode ser nulo e nem em branco")
+	@NotBlank
 	@Column(nullable = false)
 	private String nome;
 

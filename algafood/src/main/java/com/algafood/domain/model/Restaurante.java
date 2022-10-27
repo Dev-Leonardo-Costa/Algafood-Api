@@ -49,7 +49,7 @@ public class Restaurante {
 	@Column(nullable = false)
 	private String nome;
 
-	//@DecimalMin("1")
+	@NotNull
 	@PositiveOrZero
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;

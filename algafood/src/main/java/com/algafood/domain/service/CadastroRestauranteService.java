@@ -15,6 +15,7 @@ import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.repository.RestauranteRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -28,20 +29,22 @@ public class CadastroRestauranteService {
 	private RestauranteRepository restauranteRepository;
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
+	@Transactional
 	public Optional<Restaurante> buscarPorId(Long restauranteId) {
 		return restauranteRepository.findById(restauranteId);
 	}
+	@Transactional
 	public List<Restaurante> buscarTodos() {
 		return restauranteRepository.findAll();
 	}
-
+	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
 		Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
 		restaurante.setCozinha(cozinha);
 		return restauranteRepository.save(restaurante);
 	}
-
+	@Transactional
 	public void excluir(Long restauranteId) {
 		try {
 			restauranteRepository.deleteById(restauranteId);

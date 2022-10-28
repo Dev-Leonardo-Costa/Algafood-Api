@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,20 +22,20 @@ public class CadastroCozinhaService {
 			= "Cozinha %d não pode ser removido: Encontra-se em uso";
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
-
+	@Transactional
 	public List<Cozinha> buscarTodas() {
 		return cozinhaRepository.findAll();
 	}
-
+	@Transactional
 	public Optional<Cozinha> buscarPorId(Long cozinhaId) {
 		return cozinhaRepository.findById(cozinhaId);
 	}
 
-	
+	@Transactional
 	public Cozinha salvar(Cozinha cozinha) {
 		return cozinhaRepository.save(cozinha);
 	}
-
+	@Transactional
 	public void excluir(Long cozinhaId) {
 
 		try {

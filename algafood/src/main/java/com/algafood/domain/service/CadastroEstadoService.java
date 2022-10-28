@@ -14,6 +14,7 @@ import com.algafood.domain.exception.EntidadeEmUsoException;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.model.Estado;
 import com.algafood.domain.repository.EstadoRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CadastroEstadoService {
@@ -23,20 +24,20 @@ public class CadastroEstadoService {
 			= "Estado %d não pode ser removido: Encontra-se em uso";
 	@Autowired
 	private EstadoRepository estadoRepository;
-
+	@Transactional
 	public List<Estado> buscarTodos() {
 		return estadoRepository.findAll();
 	}
-
+	@Transactional
 	public Optional<Estado> buscarPorId(Long estadoId) {
 		return estadoRepository.findById(estadoId);
 	}
-
+	@Transactional
 	public Estado salvar(Estado estado) {
 
 		return estadoRepository.save(estado);
 	}
-
+	@Transactional
 	public void excluir(Long estadoId) {
 		try {
 			estadoRepository.deleteById(estadoId);

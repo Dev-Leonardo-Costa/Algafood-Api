@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,10 +25,12 @@ public class CadastroCidadeService {
 	@Autowired
 	private CadastroEstadoService cadastroEstado;
 
+	@Transactional
 	public List<Cidade> buscarTodas() {
 		return cidadeRepository.findAll();
 	}
 
+	@Transactional
 	public Optional<Cidade> buscarPorId(Long cidadeId) {
 		return cidadeRepository.findById(cidadeId);
 	}
@@ -37,7 +40,7 @@ public class CadastroCidadeService {
 		cidade.setEstado(estado);
 		return cidadeRepository.save(cidade);
 	}
-
+	@Transactional
 	public void excluir(Long cidadeId) {
 		try {
 			cidadeRepository.deleteById(cidadeId);

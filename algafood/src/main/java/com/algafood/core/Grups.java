@@ -1,4 +1,4 @@
-package com.algafood;
+package com.algafood.core;
 
 public interface Grups {
     public interface CozinhaId { }

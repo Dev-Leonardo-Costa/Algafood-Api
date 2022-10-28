@@ -4,15 +4,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.algafood.Grups;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.algafood.core.Grups;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @JsonRootName("cozinha")

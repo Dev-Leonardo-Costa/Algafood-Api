@@ -1,6 +1,7 @@
 package com.algafood.domain.model;
 
 import com.algafood.core.Grups;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

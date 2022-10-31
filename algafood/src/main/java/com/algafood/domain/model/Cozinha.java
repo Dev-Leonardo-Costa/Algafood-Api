@@ -10,6 +10,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @JsonRootName("cozinha")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -28,8 +31,7 @@ public class Cozinha {
     @Column(nullable = false)
     private String nome;
    
-//  Só e usado quando é priciso de uma regra de negocio especifica     
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "cozinha")
-//    private List<Restaurante> restaurantes = new ArrayList<>();
+//  Só e usado quando é priciso de uma regra de negocio especifica
+    @OneToMany(mappedBy = "cozinha")
+    private List<Restaurante> restaurantes = new ArrayList<>();
 }

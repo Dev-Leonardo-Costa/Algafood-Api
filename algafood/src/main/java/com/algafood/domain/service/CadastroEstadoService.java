@@ -34,7 +34,6 @@ public class CadastroEstadoService {
 	}
 	@Transactional
 	public Estado salvar(Estado estado) {
-
 		return estadoRepository.save(estado);
 	}
 	@Transactional

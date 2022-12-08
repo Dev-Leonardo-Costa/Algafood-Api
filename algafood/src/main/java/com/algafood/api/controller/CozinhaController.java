@@ -20,12 +20,12 @@ public class CozinhaController {
     private CadastroCozinhaService cadastroCozinhas;
 
     @GetMapping
-    public List<Cozinha> buscarTodas() {
+    public List<Cozinha> listar() {
         return cadastroCozinhas.buscarTodas();
     }
 
     @GetMapping("/{cozinhaId}")
-    public Cozinha buscarPorId(@PathVariable Long cozinhaId) {
+    public Cozinha buscar(@PathVariable Long cozinhaId) {
         return cadastroCozinhas.buscarOuFalhar(cozinhaId);
     }
 

@@ -1,6 +1,6 @@
 package com.algafood.api.controller;
 
-import com.algafood.domain.exception.CidadeNaoEncontradoException;
+import com.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.model.Cidade;
 import com.algafood.domain.service.CadastroCidadeService;
@@ -20,12 +20,12 @@ public class CidadeController {
     private CadastroCidadeService cadastroCidades;
 
     @GetMapping
-    public List<Cidade> buscar() {
+    public List<Cidade> listar() {
         return cadastroCidades.buscarTodas();
     }
 
     @GetMapping("/{cidadeId}")
-    public Cidade buscarPorId(@PathVariable Long cidadeId) {
+    public Cidade buscar(@PathVariable Long cidadeId) {
         return cadastroCidades.buscarCidadeOuFalhar(cidadeId);
     }
 
@@ -34,7 +34,7 @@ public class CidadeController {
     public Cidade adicionar(@RequestBody @Valid Cidade cidade){
         try {
             return  cadastroCidades.salvar(cidade);
-        }catch (CidadeNaoEncontradoException ex){
+        }catch (CidadeNaoEncontradaException ex){
             throw new NegocioException(ex.getMessage());
         }
     }
@@ -52,7 +52,7 @@ public class CidadeController {
 
         try {
             return cadastroCidades.salvar(cidadeAtual);
-        }catch (CidadeNaoEncontradoException ex){
+        }catch (CidadeNaoEncontradaException ex){
             throw new NegocioException(ex.getMessage());
         }
     }

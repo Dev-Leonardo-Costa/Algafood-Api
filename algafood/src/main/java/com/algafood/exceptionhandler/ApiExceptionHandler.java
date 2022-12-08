@@ -78,7 +78,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex,
                                                                    HttpHeaders headers, HttpStatus status, WebRequest request) {
-
         ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
         String detail = String.format("O recurso %s, que você tentou acessar, é inexistente.",
                 ex.getRequestURL());
@@ -118,34 +117,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
         return handleValidationInternal(ex, ex.getBindingResult(), headers, status, request);
     }
-//    @Override
-//    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-//                                                                  HttpHeaders headers, HttpStatus status, WebRequest request) {
-//
-//        ProblemType problemType = ProblemType.DADOS_INVALIDOS;
-//        String detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
-//
-//        BindingResult bindingResult = ex.getBindingResult();
-//        List<Problem.Field> problemFields = bindingResult.getFieldErrors().stream()
-//                .map(fieldError -> {
-//
-//                    String message = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
-//
-//                    return    Problem.Field.builder()
-//                            .name(fieldError.getField())
-//                            .userMessage(message)
-//                            .build();
-//                })
-//                .collect(Collectors.toList());
-//
-//        Problem problem = createProblemBuilder(status, problemType, detail)
-//                .tamestamp(LocalDateTime.now())
-//                .fields(problemFields)
-//                .userMessage(detail)
-//                .build();
-//
-//        return handleExceptionInternal(ex, problem, headers, status, request);
-//    }
+
     private ResponseEntity<Object> handleValidationInternal(Exception ex, BindingResult bindingResult, HttpHeaders headers,
                                                             HttpStatus status, WebRequest request) {
 
@@ -188,6 +160,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus status = HttpStatus.NOT_FOUND;
         ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
         String detail = ex.getMessage();
+
         Problem problem = createProblemBuilder(status, problemType, detail)
                 .tamestamp(OffsetDateTime.now())
                 .userMessage(detail)
@@ -210,7 +183,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(EntidadeEmUsoException.class)
-    public ResponseEntity<?> handleNegocio(EntidadeEmUsoException ex, WebRequest request){
+    public ResponseEntity<?> handleEntidadeEmUso(EntidadeEmUsoException ex, WebRequest request){
         HttpStatus status = HttpStatus.CONFLICT;
         ProblemType problemType = ProblemType.ENTIDADE_EM_USO;
         String detail = ex.getMessage();
@@ -282,19 +255,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         return handleExceptionInternal(ex, problem, headers, status, request);
     }
-    private String joinPath(List<Reference> references) {
-        return references.stream()
-                .map(ref -> ref.getFieldName())
-                .collect(Collectors.joining("."));
-    }
-
     private Problem.ProblemBuilder createProblemBuilder(HttpStatus status, ProblemType problemType, String detail){
         return Problem.builder()
                 .tamestamp(OffsetDateTime.now())
                 .status(status.value())
                 .type(problemType.getUri())
                 .title(problemType.getTitle())
-                .userMessage("Erro esta no metodo createProblemBuilder")
                 .detail(detail);
+    }
+
+    private String joinPath(List<Reference> references) {
+        return references.stream()
+                .map(ref -> ref.getFieldName())
+                .collect(Collectors.joining("."));
     }
 }

@@ -44,18 +44,19 @@ public class CadastroRestauranteService {
 		restaurante.setCozinha(cozinha);
 		return restauranteRepository.save(restaurante);
 	}
-	@Transactional
-	public void excluir(Long restauranteId) {
-		try {
-			restauranteRepository.deleteById(restauranteId);
-		} catch (EmptyResultDataAccessException e) {
-			throw new RestauranteNaoEncontradoException(
-					String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId));
-		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoException(
-					String.format(MSG_RESTAURANTE_ENCONTRA_SE_EM_USO, restauranteId));
-		}
-	}
+
+//	@Transactional
+//	public void excluir(Long restauranteId) {
+//		try {
+//			restauranteRepository.deleteById(restauranteId);
+//		} catch (EmptyResultDataAccessException e) {
+//			throw new RestauranteNaoEncontradoException(
+//					String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId));
+//		} catch (DataIntegrityViolationException e) {
+//			throw new EntidadeEmUsoException(
+//					String.format(MSG_RESTAURANTE_ENCONTRA_SE_EM_USO, restauranteId));
+//		}
+//	}
 
 	public Restaurante buscarRestauranteOuFalhar(Long restauranteId) {
 		return restauranteRepository.findById(restauranteId)

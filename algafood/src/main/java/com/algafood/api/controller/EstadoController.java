@@ -33,12 +33,12 @@ public class EstadoController {
 	private CadastroEstadoService cadastroEstados;
 
 	@GetMapping
-	public List<Estado> buscarTodos() {
+	public List<Estado> listar() {
 		return cadastroEstados.buscarTodos();
 	}
 
 	@GetMapping("/{estadoId}")
-	public Estado buscarPorId(@PathVariable Long estadoId) {
+	public Estado buscar(@PathVariable Long estadoId) {
 		return cadastroEstados.buscarEstadoOuFalhar(estadoId);
 	}
 

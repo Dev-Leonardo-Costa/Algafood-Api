@@ -1,33 +1,21 @@
 package com.algafood.api.controller;
 
 import com.algafood.domain.exception.*;
-import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.service.CadastroCozinhaService;
 import com.algafood.domain.service.CadastroRestauranteService;
-import com.algafood.dto.CozinhaDTO;
 import com.algafood.dto.RestauranteDTO;
+import com.algafood.dto.assembler.RestaranteDtoDissembler;
 import com.algafood.dto.assembler.RestauranteDtoAssembler;
 import com.algafood.dto.input.RestauranteInput;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.http.server.ServletServerHttpRequest;
-import org.springframework.util.ReflectionUtils;
-import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -40,6 +28,9 @@ public class RestauranteController {
 
     @Autowired
     private RestauranteDtoAssembler restauranteDtoAssembler;
+
+    @Autowired
+    private RestaranteDtoDissembler restaranteDtoDissembler;
 
     @Autowired
     private SmartValidator validator;
@@ -59,7 +50,7 @@ public class RestauranteController {
     @ResponseStatus(HttpStatus.CREATED)
     public RestauranteDTO adicionar(@RequestBody @Valid RestauranteInput restauranteInput) {
         try {
-            Restaurante restaurante = restauranteDtoAssembler.toDoMainObject(restauranteInput);
+            Restaurante restaurante = restaranteDtoDissembler.toDoMainObject(restauranteInput);
 
             return restauranteDtoAssembler.toModelDTO(cadastroRestaurante.salvar(restaurante));
         } catch (RestauranteNaoEncontradoException ex) {
@@ -77,7 +68,7 @@ public class RestauranteController {
     public RestauranteDTO atualizar(@PathVariable Long restauranteId, @Valid @RequestBody RestauranteInput restauranteInput) {
         try {
 
-            Restaurante restaurante = restauranteDtoAssembler.toDoMainObject(restauranteInput);
+            Restaurante restaurante = restaranteDtoDissembler.toDoMainObject(restauranteInput);
             Restaurante restauranteAtual = cadastroRestaurante.buscarRestauranteOuFalhar(restauranteId);
             BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
             return restauranteDtoAssembler.toModelDTO(cadastroRestaurante.salvar(restauranteAtual));

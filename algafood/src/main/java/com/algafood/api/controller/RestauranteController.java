@@ -1,14 +1,15 @@
 package com.algafood.api.controller;
 
-import com.algafood.domain.exception.*;
+import com.algafood.domain.exception.CozinhaNaoEncontradaException;
+import com.algafood.domain.exception.NegocioException;
+import com.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.service.CadastroCozinhaService;
 import com.algafood.domain.service.CadastroRestauranteService;
 import com.algafood.dto.RestauranteDTO;
-import com.algafood.dto.assembler.RestaranteDtoDissembler;
+import com.algafood.dto.assembler.RestaranteDtoInputDissembler;
 import com.algafood.dto.assembler.RestauranteDtoAssembler;
 import com.algafood.dto.input.RestauranteInput;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.SmartValidator;
@@ -30,7 +31,7 @@ public class RestauranteController {
     private RestauranteDtoAssembler restauranteDtoAssembler;
 
     @Autowired
-    private RestaranteDtoDissembler restaranteDtoDissembler;
+    private RestaranteDtoInputDissembler restaranteDtoInputDissembler;
 
     @Autowired
     private SmartValidator validator;
@@ -50,7 +51,7 @@ public class RestauranteController {
     @ResponseStatus(HttpStatus.CREATED)
     public RestauranteDTO adicionar(@RequestBody @Valid RestauranteInput restauranteInput) {
         try {
-            Restaurante restaurante = restaranteDtoDissembler.toDoMainObject(restauranteInput);
+            Restaurante restaurante = restaranteDtoInputDissembler.toDoMainObject(restauranteInput);
 
             return restauranteDtoAssembler.toModelDTO(cadastroRestaurante.salvar(restaurante));
         } catch (RestauranteNaoEncontradoException ex) {
@@ -68,9 +69,11 @@ public class RestauranteController {
     public RestauranteDTO atualizar(@PathVariable Long restauranteId, @Valid @RequestBody RestauranteInput restauranteInput) {
         try {
 
-            Restaurante restaurante = restaranteDtoDissembler.toDoMainObject(restauranteInput);
+            // Restaurante restaurante = restaranteDtoDissembler.toDoMainObject(restauranteInput);
             Restaurante restauranteAtual = cadastroRestaurante.buscarRestauranteOuFalhar(restauranteId);
-            BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
+            // BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
+
+            restaranteDtoInputDissembler.copyToDomainObjetct(restauranteInput, restauranteAtual);
             return restauranteDtoAssembler.toModelDTO(cadastroRestaurante.salvar(restauranteAtual));
 
         } catch (CozinhaNaoEncontradaException ex) {

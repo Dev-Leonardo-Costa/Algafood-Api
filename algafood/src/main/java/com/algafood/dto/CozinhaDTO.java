@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class CozinhaDTO {
 
-    private Long id;
-    private String nome;
+    private Long cozinhaId;
+    private String cozinhaNome;
 
 }

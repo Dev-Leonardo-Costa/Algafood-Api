@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 public class RestauranteDTO {
 
     private Long restauranteId;
-    private String restaurante;
-    private BigDecimal frete;
+    private String restauranteNome;
+    private BigDecimal precoFrete;
     private CozinhaDTO cozinha;
 
 }

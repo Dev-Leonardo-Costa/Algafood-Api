@@ -15,43 +15,45 @@ import java.util.Optional;
 
 @Service
 public class CadastroCozinhaService {
-	public static final String MSG_COZINHA_NAO_ENCONTRADA
-			= "Não existe um cadastro de cozinha com código %d";
-	public static final String MSG_COZINHA_ENCONTRA_SE_EM_USO
-			= "Cozinha %d não pode ser removido: Encontra-se em uso";
-	@Autowired
-	private CozinhaRepository cozinhaRepository;
-	@Transactional
-	public List<Cozinha> buscarTodas() {
-		return cozinhaRepository.findAll();
-	}
-	@Transactional
-	public Optional<Cozinha> buscarPorId(Long cozinhaId) {
-		return cozinhaRepository.findById(cozinhaId);
-	}
+    public static final String MSG_COZINHA_NAO_ENCONTRADA
+            = "Não existe um cadastro de cozinha com código %d";
+    public static final String MSG_COZINHA_SE_EM_USO
+            = "Cozinha %d não pode ser removido: Encontra-se em uso";
+    @Autowired
+    private CozinhaRepository cozinhaRepository;
 
-	@Transactional
-	public Cozinha salvar(Cozinha cozinha) {
-		return cozinhaRepository.save(cozinha);
-	}
+    @Transactional
+    public List<Cozinha> buscarTodas() {
+        return cozinhaRepository.findAll();
+    }
+//	@Transactional
+//	public Optional<Cozinha> buscarPorId(Long cozinhaId) {
+//		return cozinhaRepository.findById(cozinhaId);
+//	}
 
-	public void excluir(Long cozinhaId) {
+    @Transactional
+    public Cozinha salvar(Cozinha cozinha) {
 
-		try {
-			cozinhaRepository.deleteById(cozinhaId);
+        return cozinhaRepository.save(cozinha);
+    }
 
-		} catch (EmptyResultDataAccessException e) {
-			throw new CozinhaNaoEncontradaException(
-					String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId ));
+    public void excluir(Long cozinhaId) {
 
-		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoException(
-					String.format(MSG_COZINHA_ENCONTRA_SE_EM_USO, cozinhaId));
-		}
-	}
-	public Cozinha buscarOuFalhar(Long cozinhaId){
-		return cozinhaRepository.findById(cozinhaId)
-				.orElseThrow(() -> new CozinhaNaoEncontradaException(
-						String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId)));
-	}
+        try {
+            cozinhaRepository.deleteById(cozinhaId);
+            cozinhaRepository.flush();
+        } catch (EmptyResultDataAccessException e) {
+            throw new CozinhaNaoEncontradaException(cozinhaId);
+
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeEmUsoException(
+                    String.format(MSG_COZINHA_SE_EM_USO, cozinhaId));
+        }
+    }
+
+    public Cozinha buscarOuFalhar(Long cozinhaId) {
+        return cozinhaRepository.findById(cozinhaId)
+                .orElseThrow(() -> new CozinhaNaoEncontradaException(
+                        String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId)));
+    }
 }

@@ -28,10 +28,10 @@ public class CadastroEstadoService {
 	public List<Estado> buscarTodos() {
 		return estadoRepository.findAll();
 	}
-	@Transactional
-	public Optional<Estado> buscarPorId(Long estadoId) {
-		return estadoRepository.findById(estadoId);
-	}
+//	@Transactional
+//	public Optional<Estado> buscarPorId(Long estadoId) {
+//		return estadoRepository.findById(estadoId);
+//	}
 	@Transactional
 	public Estado salvar(Estado estado) {
 		return estadoRepository.save(estado);
@@ -40,6 +40,7 @@ public class CadastroEstadoService {
 	public void excluir(Long estadoId) {
 		try {
 			estadoRepository.deleteById(estadoId);
+			estadoRepository.flush();
 		} catch (EmptyResultDataAccessException e) {
 			throw new EstadoNaoEncontradoException(
 					String.format(MSG_ESTADO_NAO_ENCONTRADO, estadoId));

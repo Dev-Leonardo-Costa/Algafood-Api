@@ -59,11 +59,11 @@ public class RestauranteController {
         }
     }
 
-//    @DeleteMapping("/{restauranteId}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void remover(@PathVariable Long restauranteId) {
-//        cadastroRestaurante.excluir(restauranteId);
-//    }
+    @DeleteMapping("/{restauranteId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remover(@PathVariable Long restauranteId) {
+        cadastroRestaurante.excluir(restauranteId);
+    }
 
     @PutMapping("/{restauranteId}")
     public RestauranteDTO atualizar(@PathVariable Long restauranteId, @Valid @RequestBody RestauranteInput restauranteInput) {

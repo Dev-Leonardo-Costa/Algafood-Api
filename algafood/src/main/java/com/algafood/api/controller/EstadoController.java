@@ -3,6 +3,10 @@ package com.algafood.api.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.algafood.dto.EstadoDTO;
+import com.algafood.dto.assembler.EstadoDtoAssembler;
+import com.algafood.dto.assembler.EstadoDtoInputDissembler;
+import com.algafood.dto.input.EstadoInput;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,27 +36,37 @@ public class EstadoController {
 	@Autowired
 	private CadastroEstadoService cadastroEstados;
 
+	@Autowired
+	private EstadoDtoAssembler estadoDtoAssembler;
+
+	@Autowired
+	private EstadoDtoInputDissembler estadoDtoInputDissembler;
+
 	@GetMapping
-	public List<Estado> listar() {
-		return cadastroEstados.buscarTodos();
+	public List<EstadoDTO> listar() {
+		List<Estado> todosEstados = cadastroEstados.buscarTodos();
+		return estadoDtoAssembler.toCollectionModel(todosEstados);
 	}
 
 	@GetMapping("/{estadoId}")
-	public Estado buscar(@PathVariable Long estadoId) {
-		return cadastroEstados.buscarEstadoOuFalhar(estadoId);
+	public EstadoDTO buscar(@PathVariable Long estadoId) {
+		Estado estado = cadastroEstados.buscarEstadoOuFalhar(estadoId);
+		return estadoDtoAssembler.toModelDTO(estado);
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Estado adicionar(@RequestBody @Valid Estado estado) {
-		return cadastroEstados.salvar(estado);
+	public EstadoDTO adicionar(@RequestBody @Valid EstadoInput estadoInput) {
+		Estado estado = estadoDtoInputDissembler.toDoMainObject(estadoInput);
+		return estadoDtoAssembler.toModelDTO(estado);
 	}
 
 	@PutMapping("/{estadoId}")
-	public Estado atualizar(@PathVariable Long estadoId, @RequestBody @Valid Estado estado) {
+	public EstadoDTO atualizar(@PathVariable Long estadoId, @RequestBody @Valid EstadoInput estadoInput) {
 		Estado estadoAtual = cadastroEstados.buscarEstadoOuFalhar(estadoId);
-		BeanUtils.copyProperties(estado, estadoAtual, "id");
-		return cadastroEstados.salvar(estadoAtual);
+		estadoDtoInputDissembler.copyToDomainObjetct(estadoInput, estadoAtual);
+		estadoAtual = cadastroEstados.salvar(estadoAtual);
+		return estadoDtoAssembler.toModelDTO(estadoAtual);
 	}
 
 	@DeleteMapping("/{estadoId}")

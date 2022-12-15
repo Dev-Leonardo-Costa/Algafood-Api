@@ -17,14 +17,13 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Estado {
 
-    @NotNull(groups = Grups.EstadoId.class)
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
 
-    @NotBlank(message = "Não pode ser nulo nem branco")
+    @NotBlank
     @Column(nullable = false)
     private String nome;
 

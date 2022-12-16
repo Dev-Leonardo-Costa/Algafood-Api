@@ -29,10 +29,10 @@ public class CadastroRestauranteService {
 	private RestauranteRepository restauranteRepository;
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
-	@Transactional
-	public Optional<Restaurante> buscarPorId(Long restauranteId) {
-		return restauranteRepository.findById(restauranteId);
-	}
+//	@Transactional
+//	public Optional<Restaurante> buscarPorId(Long restauranteId) {
+//		return restauranteRepository.findById(restauranteId);
+//	}
 	@Transactional
 	public List<Restaurante> buscarTodos() {
 		return restauranteRepository.findAll();
@@ -59,8 +59,7 @@ public class CadastroRestauranteService {
 
 	public Restaurante buscarRestauranteOuFalhar(Long restauranteId) {
 		return restauranteRepository.findById(restauranteId)
-				.orElseThrow(() -> new RestauranteNaoEncontradoException(
-						String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
+				.orElseThrow(() -> new RestauranteNaoEncontradoException(restauranteId));
 	}
 
 	@Transactional

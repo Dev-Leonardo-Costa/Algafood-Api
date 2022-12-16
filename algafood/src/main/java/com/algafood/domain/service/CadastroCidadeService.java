@@ -30,10 +30,10 @@ public class CadastroCidadeService {
         return cidadeRepository.findAll();
     }
 
-    @Transactional
-    public Optional<Cidade> buscarPorId(Long cidadeId) {
-        return cidadeRepository.findById(cidadeId);
-    }
+//    @Transactional
+//    public Optional<Cidade> buscarPorId(Long cidadeId) {
+//        return cidadeRepository.findById(cidadeId);
+//    }
 
     public Cidade salvar(Cidade cidade) {
         Long estadoId = cidade.getEstado().getId();

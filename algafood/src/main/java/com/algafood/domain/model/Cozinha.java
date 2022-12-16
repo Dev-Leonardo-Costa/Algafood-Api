@@ -20,7 +20,7 @@ public class Cozinha {
 
 
     //	@NotNull(groups = Groups.CozinhaId.class)
-    @NotNull
+//    @NotNull
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

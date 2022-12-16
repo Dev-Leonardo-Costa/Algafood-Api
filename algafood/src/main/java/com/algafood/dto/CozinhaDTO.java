@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class CozinhaDTO {
 
-    private Long id;
-    private String nome;
+    private Long cozinhaId;
+    private String cozinhaNome;
 
 }

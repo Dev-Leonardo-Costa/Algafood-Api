@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class CidadeDTO {
 
-    private Long id;
-    private String nome;
+    private Long cidadeId;
+    private String cidadeNome;
     private EstadoDTO estado;
 
 }

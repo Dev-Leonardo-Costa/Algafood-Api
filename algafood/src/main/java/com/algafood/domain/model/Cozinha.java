@@ -1,13 +1,10 @@
 package com.algafood.domain.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonRootName;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 

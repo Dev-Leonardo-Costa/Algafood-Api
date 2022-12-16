@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class EstadoDTO {
 
-    private Long id;
-    private String nome;
+    private Long estadoId;
+    private String estadoNome;
 
 }

@@ -1,10 +1,8 @@
 package com.algafood.domain.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.algafood.core.Grups;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import lombok.Data;
@@ -20,6 +18,8 @@ import java.util.List;
 @Entity
 public class Cozinha {
 
+
+    //	@NotNull(groups = Groups.CozinhaId.class)
     @NotNull
     @EqualsAndHashCode.Include
     @Id
@@ -27,7 +27,7 @@ public class Cozinha {
     @Column(nullable = false)
     private Long id;
 
-    @NotBlank
+//    @NotBlank
     @Column(nullable = false)
     private String nome;
    

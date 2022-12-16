@@ -41,6 +41,8 @@ public class EstadoController {
 
 	@Autowired
 	private EstadoDtoInputDissembler estadoDtoInputDissembler;
+	@Autowired
+	private EstadoRepository estadoRepository;
 
 	@GetMapping
 	public List<EstadoDTO> listar() {
@@ -58,6 +60,7 @@ public class EstadoController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public EstadoDTO adicionar(@RequestBody @Valid EstadoInput estadoInput) {
 		Estado estado = estadoDtoInputDissembler.toDoMainObject(estadoInput);
+		estado = cadastroEstados.salvar(estado);
 		return estadoDtoAssembler.toModelDTO(estado);
 	}
 

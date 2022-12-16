@@ -24,9 +24,9 @@ public class RestauranteController {
 
     @Autowired
     private CadastroRestauranteService cadastroRestaurante;
+
     @Autowired
     private CadastroCozinhaService cadastroCozinha;
-
     @Autowired
     private RestauranteDtoAssembler restauranteDtoAssembler;
 

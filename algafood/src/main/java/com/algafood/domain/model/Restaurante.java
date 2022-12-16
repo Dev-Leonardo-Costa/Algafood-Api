@@ -1,7 +1,6 @@
 package com.algafood.domain.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +23,8 @@ import javax.validation.constraints.PositiveOrZero;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 
-import com.algafood.core.Grups;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -53,8 +48,8 @@ public class Restaurante {
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
+	//	@ConvertGroup(from = Default.class, to = Grups.CozinhaId.class)
 	@Valid
-	@ConvertGroup(from = Default.class, to = Grups.CozinhaId.class)
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "cozinha_id", nullable = false)

@@ -1,7 +1,5 @@
 package com.algafood.domain.model;
 
-import com.algafood.core.Grups;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -27,8 +25,8 @@ public class Cidade {
     @Column(nullable = false)
     private String nome;
 
+//    @ConvertGroup(from = Default.class, to = Grups.EstadoId.class)
     @Valid
-    @ConvertGroup(from = Default.class, to = Grups.EstadoId.class)
     @NotNull
     @ManyToOne
     @JoinColumn(name = "estado_id", nullable = false)

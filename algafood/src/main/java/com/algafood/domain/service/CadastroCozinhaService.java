@@ -4,6 +4,7 @@ import com.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algafood.domain.exception.EntidadeEmUsoException;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.repository.CozinhaRepository;
+import com.algafood.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,19 +22,15 @@ public class CadastroCozinhaService {
             = "Cozinha %d não pode ser removido: Encontra-se em uso";
     @Autowired
     private CozinhaRepository cozinhaRepository;
+    @Autowired
+    private RestauranteRepository restauranteRepository;
 
     @Transactional
     public List<Cozinha> buscarTodas() {
         return cozinhaRepository.findAll();
     }
-//	@Transactional
-//	public Optional<Cozinha> buscarPorId(Long cozinhaId) {
-//		return cozinhaRepository.findById(cozinhaId);
-//	}
-
     @Transactional
     public Cozinha salvar(Cozinha cozinha) {
-
         return cozinhaRepository.save(cozinha);
     }
 
@@ -53,7 +50,11 @@ public class CadastroCozinhaService {
 
     public Cozinha buscarOuFalhar(Long cozinhaId) {
         return cozinhaRepository.findById(cozinhaId)
-                .orElseThrow(() -> new CozinhaNaoEncontradaException(
-                        String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId)));
+                .orElseThrow(() -> new CozinhaNaoEncontradaException(cozinhaId));
     }
+
+    //	@Transactional
+//	public Optional<Cozinha> buscarPorId(Long cozinhaId) {
+//		return cozinhaRepository.findById(cozinhaId);
+//	}
 }

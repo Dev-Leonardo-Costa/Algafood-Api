@@ -22,8 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class CadastroRestauranteService {
-	public static final String MSG_RESTAURANTE_NAO_ENCONTRADO
-			= "Não existe um cadastro de restaurante com código %d";
+
 	public static final String MSG_RESTAURANTE_ENCONTRA_SE_EM_USO
 			= "Restaurante %d não pode ser removido: Encontra-se em uso";
 	@Autowired

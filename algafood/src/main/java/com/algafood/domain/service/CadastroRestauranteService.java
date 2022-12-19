@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.algafood.domain.exception.RestauranteNaoEncontradoException;
+import com.algafood.domain.model.Cidade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -29,6 +30,9 @@ public class CadastroRestauranteService {
 	private RestauranteRepository restauranteRepository;
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
+
+	@Autowired
+	private CadastroCidadeService cadastroCidade;
 //	@Transactional
 //	public Optional<Restaurante> buscarPorId(Long restauranteId) {
 //		return restauranteRepository.findById(restauranteId);
@@ -40,8 +44,14 @@ public class CadastroRestauranteService {
 	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
+		Long cidadeId = restaurante.getEndereco().getCidade().getId();
+
 		Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
+		Cidade cidade = cadastroCidade.buscarCidadeOuFalhar(cidadeId);
+
 		restaurante.setCozinha(cozinha);
+		restaurante.getEndereco().setCidade(cidade);
+
 		return restauranteRepository.save(restaurante);
 	}
 

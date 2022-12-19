@@ -1,5 +1,6 @@
 package com.algafood.api.controller;
 
+import com.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.exception.RestauranteNaoEncontradoException;
@@ -54,7 +55,7 @@ public class RestauranteController {
             Restaurante restaurante = restaranteDtoInputDissembler.toDoMainObject(restauranteInput);
 
             return restauranteDtoAssembler.toModelDTO(cadastroRestaurante.salvar(restaurante));
-        } catch (RestauranteNaoEncontradoException ex) {
+        } catch (RestauranteNaoEncontradoException | CidadeNaoEncontradaException ex) {
             throw new NegocioException(ex.getMessage());
         }
     }
@@ -76,7 +77,7 @@ public class RestauranteController {
             restaranteDtoInputDissembler.copyToDomainObjetct(restauranteInput, restauranteAtual);
             return restauranteDtoAssembler.toModelDTO(cadastroRestaurante.salvar(restauranteAtual));
 
-        } catch (CozinhaNaoEncontradaException ex) {
+        } catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException ex) {
             throw new NegocioException(ex.getMessage());
         }
     }

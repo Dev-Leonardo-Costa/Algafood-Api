@@ -1,19 +1,15 @@
 package com.algafood.domain.service;
 
-import com.algafood.domain.exception.EntidadeEmUsoException;
-import com.algafood.domain.exception.GrupoNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.exception.UsuarioNaoEncontradaException;
 import com.algafood.domain.model.Usuario;
-import com.algafood.domain.repository.RestauranteRepository;
 import com.algafood.domain.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CadastroUsuarioService {
@@ -21,8 +17,6 @@ public class CadastroUsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-    @Autowired
-    private RestauranteRepository restauranteRepository;
 
     @Transactional
     public List<Usuario> buscarTodos(){
@@ -31,6 +25,14 @@ public class CadastroUsuarioService {
 
     @Transactional
     public Usuario salvar(Usuario usuario){
+        usuarioRepository.detach(usuario);
+
+        Optional<Usuario> usuarioExistente = usuarioRepository.findByEmail(usuario.getEmail());
+
+        if (usuarioExistente.isPresent() && !usuarioExistente.get().equals(usuario)){
+            throw new NegocioException(String.format( "Já existe usuário cadastrado com esse e-mail %s", usuario.getEmail()));
+        }
+
         return usuarioRepository.save(usuario);
     }
 

@@ -14,6 +14,7 @@ import java.util.Optional;
 @Service
 public class CadastroUsuarioService {
     public static final String NAO_COINCIDE_COM_A_SENHA_DO_USUARIO = "Senha atual informada não coincide com a senha do usuário.";
+    public static final String JA_EXISTE_USUARIO_CADASTRADO_COM_ESSE_EMAIL = "Já existe usuário cadastrado com esse e-mail %s";
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -30,7 +31,7 @@ public class CadastroUsuarioService {
         Optional<Usuario> usuarioExistente = usuarioRepository.findByEmail(usuario.getEmail());
 
         if (usuarioExistente.isPresent() && !usuarioExistente.get().equals(usuario)){
-            throw new NegocioException(String.format( "Já existe usuário cadastrado com esse e-mail %s", usuario.getEmail()));
+            throw new NegocioException(String.format(JA_EXISTE_USUARIO_CADASTRADO_COM_ESSE_EMAIL, usuario.getEmail()));
         }
 
         return usuarioRepository.save(usuario);

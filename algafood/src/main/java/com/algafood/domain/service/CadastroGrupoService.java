@@ -6,6 +6,7 @@ import com.algafood.domain.exception.GrupoNaoEncontradaException;
 import com.algafood.domain.model.Cidade;
 import com.algafood.domain.model.Estado;
 import com.algafood.domain.model.Grupo;
+import com.algafood.domain.model.Permissao;
 import com.algafood.domain.repository.GrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,6 +23,9 @@ public class CadastroGrupoService {
             = "Grupo de código %d não pode ser removida: Encontra-se em uso";
     @Autowired
     private GrupoRepository grupoRepository;
+
+    @Autowired
+    private CadastroPermissaoService cadastroPermissao;
 
     @Transactional
     public List<Grupo> buscarTodos() {
@@ -47,6 +51,20 @@ public class CadastroGrupoService {
             throw  new EntidadeEmUsoException(
                     String.format(MSG_GRUPO_ENCONTRA_SE_EM_USO, grupoId));
         }
+    }
+    @Transactional
+    public void associarPermissao(Long grupoId, Long permissaoId){
+        Grupo grupo = buscarGrupoOuFalhar(grupoId);
+
+        Permissao permissao = cadastroPermissao.buscarPermissaoOuFalhar(permissaoId);
+        grupo.adicionarPermissao(permissao);
+    }
+    @Transactional
+    public void desassociarPermissao(Long grupoId, Long permissaoId){
+        Grupo grupo = buscarGrupoOuFalhar(grupoId);
+
+        Permissao permissao = cadastroPermissao.buscarPermissaoOuFalhar(permissaoId);
+        grupo.removerPermissao(permissao);
     }
 
     public Grupo buscarGrupoOuFalhar(Long grupoId){

@@ -16,8 +16,7 @@ import java.util.Optional;
 
 @Service
 public class CadastroCidadeService {
-    public static final String MSG_CIDADE_NAO_ENCONTRADA
-            = "Não existe cadastro de cidade com esse código %d ";
+
     public static final String MSG_CIDADE_ENCONTRA_SE_EM_USO
             = "Cidade %d não pode ser removida: Encontra-se em uso";
     @Autowired
@@ -60,8 +59,7 @@ public class CadastroCidadeService {
 
     public Cidade buscarCidadeOuFalhar(Long cidadeId) {
         return cidadeRepository.findById(cidadeId)
-                .orElseThrow(() -> new CidadeNaoEncontradaException(
-                        String.format(MSG_CIDADE_NAO_ENCONTRADA, cidadeId)));
+                .orElseThrow(() -> new CidadeNaoEncontradaException(cidadeId));
     }
 
 }

@@ -18,8 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CadastroEstadoService {
-	public static final String MSG_ESTADO_NAO_ENCONTRADO
-			= "Não existe um cadastro de estado com código %d";
 	public static final String MSG_ESTADO_ENCONTRA_SE_EM_USO
 			= "Estado %d não pode ser removido: Encontra-se em uso";
 	@Autowired
@@ -28,10 +26,7 @@ public class CadastroEstadoService {
 	public List<Estado> buscarTodos() {
 		return estadoRepository.findAll();
 	}
-//	@Transactional
-//	public Optional<Estado> buscarPorId(Long estadoId) {
-//		return estadoRepository.findById(estadoId);
-//	}
+
 	@Transactional
 	public Estado salvar(Estado estado) {
 		return estadoRepository.save(estado);
@@ -52,4 +47,9 @@ public class CadastroEstadoService {
 		return estadoRepository.findById(estadoId)
 				.orElseThrow(() -> new EstadoNaoEncontradoException(estadoId));
 	}
+
+	//	@Transactional
+//	public Optional<Estado> buscarPorId(Long estadoId) {
+//		return estadoRepository.findById(estadoId);
+//	}
 }

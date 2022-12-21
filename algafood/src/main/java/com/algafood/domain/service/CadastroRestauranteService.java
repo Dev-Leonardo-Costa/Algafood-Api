@@ -64,6 +64,18 @@ public class CadastroRestauranteService {
 		Restaurante restauranteAtual = buscarRestauranteOuFalhar(restauranteId);
 		restauranteAtual.setAtivo(false);
 	}
+	@Transactional
+	public void abrir(Long restauranteId) {
+		Restaurante restauranteAtual = buscarRestauranteOuFalhar(restauranteId);
+		restauranteAtual.aberto();
+	}
+	@Transactional
+	public void fechar(Long restauranteId) {
+		Restaurante restauranteAtual = buscarRestauranteOuFalhar(restauranteId);
+		restauranteAtual.fechado();
+	}
+
+
 
 	@Transactional
 	public void excluir(Long restauranteId) {

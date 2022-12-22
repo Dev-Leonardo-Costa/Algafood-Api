@@ -1,6 +1,5 @@
 package com.algafood.domain.model;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -56,10 +55,10 @@ public class Usuario {
 		return !senhaCoincideCom(senha);
 	}
 
-	public boolean removerGrupo(Grupo grupo){
-		return getGrupos().remove(grupo);
+	public void removerGrupo(Grupo grupo){
+		getGrupos().remove(grupo);
 	}
-	public boolean adicionarrGrupo(Grupo grupo){
-		return getGrupos().add(grupo);
+	public void adicionarGrupo(Grupo grupo){
+		getGrupos().add(grupo);
 	}
 }

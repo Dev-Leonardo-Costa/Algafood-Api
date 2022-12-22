@@ -67,6 +67,6 @@ public class CadastroUsuarioService {
     public void associarGrupo(Long usuarioId, Long grupoId) {
         Usuario usuario = buscarUsuarioOuFalhar(usuarioId);
         Grupo grupo = cadastroGrupo.buscarGrupoOuFalhar(grupoId);
-        usuario.adicionarrGrupo(grupo);
+        usuario.adicionarGrupo(grupo);
     }
 }

@@ -3,13 +3,11 @@ package com.algafood.api.controller;
 import com.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.model.Cidade;
-import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.service.CadastroCidadeService;
 import com.algafood.dto.CidadeDTO;
 import com.algafood.dto.assembler.CidadeDtoAssembler;
 import com.algafood.dto.assembler.CidadeDtoInputDissembler;
 import com.algafood.dto.input.CidadeInput;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -68,7 +66,7 @@ public class CidadeController {
         try {
 
             Cidade cidadeAtual = cadastroCidades.buscarCidadeOuFalhar(cidadeId);
-            cidadeDtoInputDissembler.copyToDomainObjetct(cidadeInput, cidadeAtual);
+            cidadeDtoInputDissembler.copyToDomainObject(cidadeInput, cidadeAtual);
             return cidadeDtoAssembler.toModelDTO(cadastroCidades.salvar(cidadeAtual));
 
         } catch (CidadeNaoEncontradaException ex) {

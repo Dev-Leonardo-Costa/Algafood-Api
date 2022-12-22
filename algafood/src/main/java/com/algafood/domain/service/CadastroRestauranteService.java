@@ -3,16 +3,13 @@ package com.algafood.domain.service;
 import java.util.List;
 
 import com.algafood.domain.exception.RestauranteNaoEncontradoException;
-import com.algafood.domain.model.Cidade;
-import com.algafood.domain.model.FormaPagamento;
+import com.algafood.domain.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.algafood.domain.exception.EntidadeEmUsoException;
-import com.algafood.domain.model.Cozinha;
-import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.repository.RestauranteRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +28,9 @@ public class CadastroRestauranteService {
 
 	@Autowired
 	private CadastroCidadeService cadastroCidade;
+
+	@Autowired
+	private CadastroUsuarioService cadastroUsuario;
 //	@Transactional
 //	public Optional<Restaurante> buscarPorId(Long restauranteId) {
 //		return restauranteRepository.findById(restauranteId);
@@ -74,9 +74,6 @@ public class CadastroRestauranteService {
 		Restaurante restauranteAtual = buscarRestauranteOuFalhar(restauranteId);
 		restauranteAtual.fechado();
 	}
-
-
-
 	@Transactional
 	public void excluir(Long restauranteId) {
 		try {
@@ -106,6 +103,19 @@ public class CadastroRestauranteService {
 		FormaPagamento formaPagamento = cadastroFormaPagamento.buscarFormaPagamentoOuFalhar(formaPagamentoId);
 
 		restaurante.adicionarFormaPagamento(formaPagamento);
+	}
+
+	@Transactional
+	public void desassociarResponsavel(Long restauranteId, Long usuarioId){
+		Restaurante restaurante = buscarRestauranteOuFalhar(restauranteId);
+		Usuario usuario = cadastroUsuario.buscarUsuarioOuFalhar(usuarioId);
+		restaurante.removerResponsavel(usuario);
+	}
+	@Transactional
+	public void associarResponsavel(Long restauranteId, Long usuarioId){
+		Restaurante restaurante = buscarRestauranteOuFalhar(restauranteId);
+		Usuario usuario = cadastroUsuario.buscarUsuarioOuFalhar(usuarioId);
+		restaurante.adicionarResponsavel(usuario);
 	}
 
 	public Restaurante buscarRestauranteOuFalhar(Long restauranteId) {

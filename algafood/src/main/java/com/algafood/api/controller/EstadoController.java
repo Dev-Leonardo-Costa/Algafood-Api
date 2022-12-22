@@ -1,16 +1,13 @@
 package com.algafood.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.algafood.dto.EstadoDTO;
 import com.algafood.dto.assembler.EstadoDtoAssembler;
 import com.algafood.dto.assembler.EstadoDtoInputDissembler;
 import com.algafood.dto.input.EstadoInput;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algafood.domain.exception.EntidadeEmUsoException;
-import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.model.Estado;
 import com.algafood.domain.repository.EstadoRepository;
 import com.algafood.domain.service.CadastroEstadoService;
@@ -68,7 +63,7 @@ public class EstadoController {
 	@PutMapping("/{estadoId}")
 	public EstadoDTO atualizar(@PathVariable Long estadoId, @RequestBody @Valid EstadoInput estadoInput) {
 		Estado estadoAtual = cadastroEstados.buscarEstadoOuFalhar(estadoId);
-		estadoDtoInputDissembler.copyToDomainObjetct(estadoInput, estadoAtual);
+		estadoDtoInputDissembler.copyToDomainObject(estadoInput, estadoAtual);
 		estadoAtual = cadastroEstados.salvar(estadoAtual);
 		return estadoDtoAssembler.toModelDTO(estadoAtual);
 	}

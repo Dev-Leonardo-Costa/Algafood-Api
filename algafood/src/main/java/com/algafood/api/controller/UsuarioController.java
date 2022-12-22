@@ -51,7 +51,7 @@ public class UsuarioController {
     @PutMapping("/{usuarioId}")
     public UsuarioDTO atualizar(@PathVariable Long usuarioId, @RequestBody @Valid UsuarioInput usuarioInput){
         Usuario usuarioAtual = cadastroUsuario.buscarUsuarioOuFalhar(usuarioId);
-        usuarioDtoInputDissembler.copyToDomainObjetct(usuarioInput, usuarioAtual);
+        usuarioDtoInputDissembler.copyToDomainObject(usuarioInput, usuarioAtual);
         usuarioAtual = cadastroUsuario.salvar(usuarioAtual);
         return usuarioDtoAssembler.toModelDTO(usuarioAtual);
     }

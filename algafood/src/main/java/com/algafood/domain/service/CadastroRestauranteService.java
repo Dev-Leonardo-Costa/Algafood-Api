@@ -64,6 +64,16 @@ public class CadastroRestauranteService {
 		Restaurante restauranteAtual = buscarRestauranteOuFalhar(restauranteId);
 		restauranteAtual.setAtivo(false);
 	}
+
+	@Transactional
+	public void ativarEmMassa(List<Long> restauranteIds){
+		restauranteIds.forEach(this::ativar);
+	}
+
+	@Transactional
+	public void inativarEmMassa(List<Long> restauranteIds) {
+		restauranteIds.forEach(this::inativar);
+	}
 	@Transactional
 	public void abrir(Long restauranteId) {
 		Restaurante restauranteAtual = buscarRestauranteOuFalhar(restauranteId);

@@ -104,6 +104,17 @@ public class RestauranteController {
         cadastroRestaurante.abrir(restauranteId);
     }
 
+    @PutMapping("/ativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativarMultiplos(@RequestBody List<Long> restauranteIds){
+        cadastroRestaurante.ativarEmMassa(restauranteIds);
+    }
+    @DeleteMapping("/ativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void inativarMultiplos(@RequestBody List<Long> restauranteIds){
+        cadastroRestaurante.inativarEmMassa(restauranteIds);
+    }
+
 //    @PatchMapping("/{restauranteId}")
 //    public RestauranteDTO atualizarParcial(@PathVariable Long restauranteId,
 //                                           @RequestBody Map<String, Object> campos, HttpServletRequest request) {

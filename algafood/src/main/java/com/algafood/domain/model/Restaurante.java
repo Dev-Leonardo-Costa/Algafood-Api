@@ -103,4 +103,10 @@ public class Restaurante {
     public void removerResponsavel(Usuario usuario) {
         getResponsaveis().remove(usuario);
     }
+    public boolean aceitarPagamento(FormaPagamento formaPagamento){
+        return getFormasPagamento().contains(formaPagamento);
+    }
+    public boolean naoAceitaPagamento(FormaPagamento formaPagamento){
+        return !aceitarPagamento(formaPagamento);
+    }
 }

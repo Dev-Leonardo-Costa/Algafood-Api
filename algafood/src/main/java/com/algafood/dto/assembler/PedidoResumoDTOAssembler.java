@@ -1,9 +1,8 @@
 package com.algafood.dto.assembler;
 
-import com.algafood.domain.model.Cidade;
-import com.algafood.domain.model.Produto;
-import com.algafood.dto.CidadeDTO;
-import com.algafood.dto.ProdutoDTO;
+import com.algafood.domain.model.Pedido;
+import com.algafood.dto.PedidoDTO;
+import com.algafood.dto.PedidoResumoDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,17 +11,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ProdutoDtoAssembler {
+public class PedidoResumoDTOAssembler {
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public ProdutoDTO toModelDTO(Produto produto) {
-        return modelMapper.map(produto, ProdutoDTO.class);
+    public PedidoResumoDTO toModelDTO(Pedido pedido) {
+        return modelMapper.map(pedido, PedidoResumoDTO.class);
     }
 
-    public List<ProdutoDTO> toCollectionModel(List<Produto> produtos){
-        return produtos.stream()
+    public List<PedidoResumoDTO> toCollectionModel(List<Pedido> pedidos){
+        return pedidos.stream()
                 .map(this::toModelDTO)
                 .collect(Collectors.toList());
     }

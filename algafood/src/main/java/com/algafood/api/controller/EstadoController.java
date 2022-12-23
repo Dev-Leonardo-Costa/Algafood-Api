@@ -3,8 +3,8 @@ package com.algafood.api.controller;
 import java.util.List;
 
 import com.algafood.dto.EstadoDTO;
-import com.algafood.dto.assembler.EstadoDtoAssembler;
-import com.algafood.dto.assembler.EstadoDtoInputDissembler;
+import com.algafood.dto.assembler.EstadoDTOAssembler;
+import com.algafood.dto.assembler.EstadoDTOInputDissembler;
 import com.algafood.dto.input.EstadoInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,10 +32,10 @@ public class EstadoController {
 	private CadastroEstadoService cadastroEstados;
 
 	@Autowired
-	private EstadoDtoAssembler estadoDtoAssembler;
+	private EstadoDTOAssembler estadoDtoAssembler;
 
 	@Autowired
-	private EstadoDtoInputDissembler estadoDtoInputDissembler;
+	private EstadoDTOInputDissembler estadoDtoInputDissembler;
 
 	@Autowired
 	private EstadoRepository estadoRepository;

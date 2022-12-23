@@ -1,9 +1,7 @@
 package com.algafood.dto.assembler;
 
-import com.algafood.domain.model.Cidade;
-import com.algafood.domain.model.Permissao;
-import com.algafood.dto.CidadeDTO;
-import com.algafood.dto.PermissaoDTO;
+import com.algafood.domain.model.Grupo;
+import com.algafood.dto.GrupoDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,17 +11,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class PermissaoDtoAssembler {
+public class GrupoDTOAssembler {
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public PermissaoDTO toModelDTO(Permissao permissao) {
-        return modelMapper.map(permissao, PermissaoDTO.class);
+    public GrupoDTO toModelDTO(Grupo grupo) {
+        return modelMapper.map(grupo, GrupoDTO.class);
     }
 
-    public List<PermissaoDTO> toCollectionModel(Collection<Permissao> permissoes){
-        return  permissoes.stream()
+    public List<GrupoDTO> toCollectionModel(Collection<Grupo> grupos){
+        return grupos.stream()
                 .map(this::toModelDTO)
                 .collect(Collectors.toList());
     }

@@ -3,8 +3,8 @@ package com.algafood.api.controller;
 import com.algafood.domain.model.FormaPagamento;
 import com.algafood.domain.service.CadastroFormaPagamentoService;
 import com.algafood.dto.FormaPagamentoDTO;
-import com.algafood.dto.assembler.FormaPagamentoDtoAssembler;
-import com.algafood.dto.assembler.FormaPagamentoDtoInputDissembler;
+import com.algafood.dto.assembler.FormaPagamentoDTOAssembler;
+import com.algafood.dto.assembler.FormaPagamentoDTOInputDissembler;
 import com.algafood.dto.input.FormaPagamentoInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,10 +21,10 @@ public class FormaPagamentoController {
     private CadastroFormaPagamentoService cadastroFormaPagamento;
 
     @Autowired
-    private FormaPagamentoDtoAssembler formaPagamentoDtoAssembler;
+    private FormaPagamentoDTOAssembler formaPagamentoDtoAssembler;
 
     @Autowired
-    private FormaPagamentoDtoInputDissembler formaPagamentoDtoInputDissembler;
+    private FormaPagamentoDTOInputDissembler formaPagamentoDtoInputDissembler;
 
     @GetMapping
     public List<FormaPagamentoDTO> listar(){

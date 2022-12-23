@@ -1,26 +1,27 @@
 package com.algafood.dto.assembler;
 
-import com.algafood.domain.model.Estado;
-import com.algafood.dto.EstadoDTO;
+import com.algafood.domain.model.Permissao;
+import com.algafood.dto.PermissaoDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class EstadoDtoAssembler {
+public class PermissaoDTOAssembler {
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public EstadoDTO toModelDTO(Estado estado) {
-        return modelMapper.map(estado, EstadoDTO.class);
+    public PermissaoDTO toModelDTO(Permissao permissao) {
+        return modelMapper.map(permissao, PermissaoDTO.class);
     }
 
-    public List<EstadoDTO> toCollectionModel(List<Estado> estados){
-        return estados.stream()
+    public List<PermissaoDTO> toCollectionModel(Collection<Permissao> permissoes){
+        return  permissoes.stream()
                 .map(this::toModelDTO)
                 .collect(Collectors.toList());
     }

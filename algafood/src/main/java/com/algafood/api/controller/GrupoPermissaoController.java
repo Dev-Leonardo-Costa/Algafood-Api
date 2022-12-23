@@ -1,20 +1,13 @@
 package com.algafood.api.controller;
 
 import com.algafood.domain.model.Grupo;
-import com.algafood.domain.model.Permissao;
-import com.algafood.domain.repository.RestauranteRepository;
 import com.algafood.domain.service.CadastroGrupoService;
-import com.algafood.dto.GrupoDTO;
 import com.algafood.dto.PermissaoDTO;
-import com.algafood.dto.assembler.GrupoDtoAssembler;
-import com.algafood.dto.assembler.GrupoDtoInputDissembler;
-import com.algafood.dto.assembler.PermissaoDtoAssembler;
-import com.algafood.dto.input.GrupoInput;
+import com.algafood.dto.assembler.PermissaoDTOAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,7 +18,7 @@ public class GrupoPermissaoController {
     private CadastroGrupoService cadastroGrupo;
 
     @Autowired
-    private PermissaoDtoAssembler permissaoDtoAssembler;
+    private PermissaoDTOAssembler permissaoDtoAssembler;
 
     @GetMapping
     public List<PermissaoDTO> listar(@PathVariable Long grupoId) {

@@ -4,8 +4,8 @@ import com.algafood.domain.model.Grupo;
 import com.algafood.domain.repository.RestauranteRepository;
 import com.algafood.domain.service.CadastroGrupoService;
 import com.algafood.dto.GrupoDTO;
-import com.algafood.dto.assembler.GrupoDtoAssembler;
-import com.algafood.dto.assembler.GrupoDtoInputDissembler;
+import com.algafood.dto.assembler.GrupoDTOAssembler;
+import com.algafood.dto.assembler.GrupoDTOInputDissembler;
 import com.algafood.dto.input.GrupoInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +22,10 @@ public class GrupoController {
     private CadastroGrupoService cadastroGrupo;
 
     @Autowired
-    private GrupoDtoAssembler grupoDtoAssembler;
+    private GrupoDTOAssembler grupoDtoAssembler;
 
     @Autowired
-    private GrupoDtoInputDissembler grupoDtoInputDissembler;
+    private GrupoDTOInputDissembler grupoDtoInputDissembler;
     @Autowired
     private RestauranteRepository restauranteRepository;
 

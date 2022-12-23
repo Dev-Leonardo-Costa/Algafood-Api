@@ -8,8 +8,8 @@ import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.service.CadastroCozinhaService;
 import com.algafood.domain.service.CadastroRestauranteService;
 import com.algafood.dto.RestauranteDTO;
-import com.algafood.dto.assembler.RestaranteDtoInputDissembler;
-import com.algafood.dto.assembler.RestauranteDtoAssembler;
+import com.algafood.dto.assembler.RestauranteDTOInputDissembler;
+import com.algafood.dto.assembler.RestauranteDTOAssembler;
 import com.algafood.dto.input.RestauranteInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,10 +29,10 @@ public class RestauranteController {
     @Autowired
     private CadastroCozinhaService cadastroCozinha;
     @Autowired
-    private RestauranteDtoAssembler restauranteDtoAssembler;
+    private RestauranteDTOAssembler restauranteDtoAssembler;
 
     @Autowired
-    private RestaranteDtoInputDissembler restaranteDtoInputDissembler;
+    private RestauranteDTOInputDissembler restaranteDtoInputDissembler;
 
     @Autowired
     private SmartValidator validator;

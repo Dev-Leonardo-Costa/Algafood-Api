@@ -5,8 +5,8 @@ import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.model.Cidade;
 import com.algafood.domain.service.CadastroCidadeService;
 import com.algafood.dto.CidadeDTO;
-import com.algafood.dto.assembler.CidadeDtoAssembler;
-import com.algafood.dto.assembler.CidadeDtoInputDissembler;
+import com.algafood.dto.assembler.CidadeDTOAssembler;
+import com.algafood.dto.assembler.CidadeDTOInputDissembler;
 import com.algafood.dto.input.CidadeInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,10 +23,10 @@ public class CidadeController {
     private CadastroCidadeService cadastroCidades;
 
     @Autowired
-    private CidadeDtoAssembler cidadeDtoAssembler;
+    private CidadeDTOAssembler cidadeDtoAssembler;
 
     @Autowired
-    private CidadeDtoInputDissembler cidadeDtoInputDissembler;
+    private CidadeDTOInputDissembler cidadeDtoInputDissembler;
 
     @GetMapping
     public List<CidadeDTO> listar() {

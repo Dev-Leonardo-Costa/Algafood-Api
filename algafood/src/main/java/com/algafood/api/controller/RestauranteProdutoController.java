@@ -5,8 +5,8 @@ import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.service.CadastroProdutoService;
 import com.algafood.domain.service.CadastroRestauranteService;
 import com.algafood.dto.ProdutoDTO;
-import com.algafood.dto.assembler.ProdutoDtoAssembler;
-import com.algafood.dto.assembler.ProdutoDtoInputDissembler;
+import com.algafood.dto.assembler.ProdutoDTOAssembler;
+import com.algafood.dto.assembler.ProdutoDTOInputDissembler;
 import com.algafood.dto.input.ProdutoInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,10 +26,10 @@ public class RestauranteProdutoController {
     private CadastroProdutoService cadastroProduto;
 
     @Autowired
-    private ProdutoDtoAssembler produtoDtoAssembler;
+    private ProdutoDTOAssembler produtoDtoAssembler;
 
     @Autowired
-    private ProdutoDtoInputDissembler produtoDtoInputDissembler;
+    private ProdutoDTOInputDissembler produtoDtoInputDissembler;
 
     @GetMapping("/{produtoId}")
     public ProdutoDTO buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {

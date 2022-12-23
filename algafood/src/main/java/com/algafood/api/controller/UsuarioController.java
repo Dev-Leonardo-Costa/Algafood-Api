@@ -3,8 +3,8 @@ package com.algafood.api.controller;
 import com.algafood.domain.model.Usuario;
 import com.algafood.domain.service.CadastroUsuarioService;
 import com.algafood.dto.UsuarioDTO;
-import com.algafood.dto.assembler.UsuarioDtoAssembler;
-import com.algafood.dto.assembler.UsuarioDtoInputDissembler;
+import com.algafood.dto.assembler.UsuarioDTOAssembler;
+import com.algafood.dto.assembler.UsuarioDTOInputDissembler;
 import com.algafood.dto.input.SenhaInput;
 import com.algafood.dto.input.UsuarioComSenhaInput;
 import com.algafood.dto.input.UsuarioInput;
@@ -23,10 +23,10 @@ public class UsuarioController {
     private CadastroUsuarioService cadastroUsuario;
 
     @Autowired
-    private UsuarioDtoAssembler usuarioDtoAssembler;
+    private UsuarioDTOAssembler usuarioDtoAssembler;
 
     @Autowired
-    private UsuarioDtoInputDissembler usuarioDtoInputDissembler;
+    private UsuarioDTOInputDissembler usuarioDtoInputDissembler;
 
     @GetMapping
     public List<UsuarioDTO> listar(){

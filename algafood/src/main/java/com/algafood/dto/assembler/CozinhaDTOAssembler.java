@@ -1,27 +1,26 @@
 package com.algafood.dto.assembler;
 
-import com.algafood.domain.model.Grupo;
-import com.algafood.dto.GrupoDTO;
+import com.algafood.domain.model.Cozinha;
+import com.algafood.dto.CozinhaDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class GrupoDtoAssembler {
+public class CozinhaDTOAssembler {
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public GrupoDTO toModelDTO(Grupo grupo) {
-        return modelMapper.map(grupo, GrupoDTO.class);
+    public CozinhaDTO toModelDTO(Cozinha cozinha) {
+        return modelMapper.map(cozinha, CozinhaDTO.class);
     }
 
-    public List<GrupoDTO> toCollectionModel(Collection<Grupo> grupos){
-        return grupos.stream()
+    public List<CozinhaDTO> toCollectionModel(List<Cozinha> cozinhas){
+        return cozinhas.stream()
                 .map(this::toModelDTO)
                 .collect(Collectors.toList());
     }

@@ -3,7 +3,7 @@ package com.algafood.api.controller;
 import com.algafood.domain.model.Usuario;
 import com.algafood.domain.service.CadastroUsuarioService;
 import com.algafood.dto.GrupoDTO;
-import com.algafood.dto.assembler.GrupoDtoAssembler;
+import com.algafood.dto.assembler.GrupoDTOAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class UsuarioGrupoController {
     private CadastroUsuarioService cadastroUsuario;
 
     @Autowired
-    private GrupoDtoAssembler grupoDtoAssembler;
+    private GrupoDTOAssembler grupoDtoAssembler;
 
     @GetMapping
     public List<GrupoDTO> listar(@PathVariable Long usuarioId) {

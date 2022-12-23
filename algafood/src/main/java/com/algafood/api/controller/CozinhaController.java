@@ -4,8 +4,8 @@ package com.algafood.api.controller;
 import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.service.CadastroCozinhaService;
 import com.algafood.dto.CozinhaDTO;
-import com.algafood.dto.assembler.CozinhaDtoAssembler;
-import com.algafood.dto.assembler.CozinhaDtoInputDissembler;
+import com.algafood.dto.assembler.CozinhaDTOAssembler;
+import com.algafood.dto.assembler.CozinhaDTOInputDissembler;
 import com.algafood.dto.input.CozinhaInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +22,10 @@ public class CozinhaController {
     private CadastroCozinhaService cadastroCozinha;
 
     @Autowired
-    private CozinhaDtoAssembler cozinhaDtoAssembler;
+    private CozinhaDTOAssembler cozinhaDtoAssembler;
 
     @Autowired
-    private CozinhaDtoInputDissembler cozinhaDtoInputDissembler;
+    private CozinhaDTOInputDissembler cozinhaDtoInputDissembler;
 
     @GetMapping
     public List<CozinhaDTO> listar() {

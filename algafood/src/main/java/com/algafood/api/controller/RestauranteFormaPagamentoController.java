@@ -3,7 +3,7 @@ package com.algafood.api.controller;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.service.CadastroRestauranteService;
 import com.algafood.dto.FormaPagamentoDTO;
-import com.algafood.dto.assembler.FormaPagamentoDtoAssembler;
+import com.algafood.dto.assembler.FormaPagamentoDTOAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class RestauranteFormaPagamentoController {
     private CadastroRestauranteService cadastroRestaurante;
 
     @Autowired
-    private FormaPagamentoDtoAssembler formaPagamentoDtoAssembler;
+    private FormaPagamentoDTOAssembler formaPagamentoDtoAssembler;
 
     @GetMapping
     public List<FormaPagamentoDTO> listar(@PathVariable Long restauranteId) {

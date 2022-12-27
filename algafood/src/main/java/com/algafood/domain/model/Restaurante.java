@@ -18,12 +18,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -106,7 +100,7 @@ public class Restaurante {
     public boolean aceitarPagamento(FormaPagamento formaPagamento){
         return getFormasPagamento().contains(formaPagamento);
     }
-    public boolean naoAceitaPagamento(FormaPagamento formaPagamento){
+    public boolean naoAceitaFormaPagamento(FormaPagamento formaPagamento){
         return !aceitarPagamento(formaPagamento);
     }
 }

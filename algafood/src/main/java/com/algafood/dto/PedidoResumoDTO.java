@@ -10,7 +10,8 @@ import java.util.List;
 @Setter
 @Getter
 public class PedidoResumoDTO {
-    private Long id;
+
+    private String codigo;
     private BigDecimal subTotal;
     private BigDecimal taxaFrete;
     private BigDecimal valorTotal;
@@ -18,4 +19,5 @@ public class PedidoResumoDTO {
     private OffsetDateTime dataCriacao;
     private RestauranteResumoDTO restaurante;
     private UsuarioDTO cliente;
+
 }

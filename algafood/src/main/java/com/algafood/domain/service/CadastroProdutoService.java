@@ -17,7 +17,11 @@ public class CadastroProdutoService {
 
     @Transactional
     public List<Produto> buscarTodos(Restaurante restaurante){
-        return produtoRepository.findByRestaurante(restaurante);
+        return produtoRepository.findTodosByRestaurante(restaurante);
+    }
+    @Transactional
+    public List<Produto> buscarAtivos(Restaurante restaurante){
+        return produtoRepository.findAtivosByRestaurante(restaurante);
     }
 
     @Transactional

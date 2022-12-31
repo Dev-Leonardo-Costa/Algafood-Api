@@ -11,7 +11,9 @@ import com.algafood.dto.PedidoResumoDTO;
 import com.algafood.dto.assembler.PedidoDTOAssembler;
 import com.algafood.dto.assembler.PedidoDTOInputDissembler;
 import com.algafood.dto.assembler.PedidoResumoDTOAssembler;
+import com.algafood.dto.filter.PedidoFilter;
 import com.algafood.dto.input.PedidoInput;
+import com.algafood.infrastructure.repository.spec.PedidoSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -39,8 +41,8 @@ public class PedidoController {
     private PedidoDTOInputDissembler pedidoDTOInputDissembler;
 
     @GetMapping
-    public List<PedidoResumoDTO> listar(){
-        List<Pedido> todosPedidos = pedidoRepository.findAll();
+    public List<PedidoResumoDTO> pesquisar(PedidoFilter filtro){
+        List<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro));
         return pedidoResumoDTOAssembler.toCollectionModel(todosPedidos);
     }
 

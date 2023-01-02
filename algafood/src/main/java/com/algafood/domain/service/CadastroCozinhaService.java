@@ -8,11 +8,12 @@ import com.algafood.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CadastroCozinhaService {
@@ -26,8 +27,8 @@ public class CadastroCozinhaService {
     private RestauranteRepository restauranteRepository;
 
     @Transactional
-    public List<Cozinha> buscarTodas() {
-        return cozinhaRepository.findAll();
+    public Page<Cozinha> buscarTodas(Pageable pageable) {
+       return cozinhaRepository.findAll(pageable);
     }
     @Transactional
     public Cozinha salvar(Cozinha cozinha) {

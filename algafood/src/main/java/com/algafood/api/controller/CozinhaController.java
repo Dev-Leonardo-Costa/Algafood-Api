@@ -2,12 +2,17 @@ package com.algafood.api.controller;
 
 
 import com.algafood.domain.model.Cozinha;
+import com.algafood.domain.repository.CozinhaRepository;
 import com.algafood.domain.service.CadastroCozinhaService;
 import com.algafood.dto.CozinhaDTO;
 import com.algafood.dto.assembler.CozinhaDTOAssembler;
 import com.algafood.dto.assembler.CozinhaDTOInputDissembler;
 import com.algafood.dto.input.CozinhaInput;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,10 +32,14 @@ public class CozinhaController {
     @Autowired
     private CozinhaDTOInputDissembler cozinhaDtoInputDissembler;
 
+    @Autowired
+    private CozinhaRepository cozinhaRepository;
+
     @GetMapping
-    public List<CozinhaDTO> listar() {
-        List<Cozinha> todasCozinhas = cadastroCozinha.buscarTodas();
-        return cozinhaDtoAssembler.toCollectionModel(todasCozinhas);
+    public Page<CozinhaDTO> listar(@PageableDefault(size = 10) Pageable pageable) {
+        Page<Cozinha> cozinhasPage = cadastroCozinha.buscarTodas(pageable);
+        List<CozinhaDTO> cozinhaDTO = cozinhaDtoAssembler.toCollectionModel(cozinhasPage.getContent());
+        return  new PageImpl<>(cozinhaDTO, pageable, cozinhasPage.getTotalElements());
     }
 
     @GetMapping("/{cozinhaId}")

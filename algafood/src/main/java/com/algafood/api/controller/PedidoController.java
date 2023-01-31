@@ -1,5 +1,6 @@
 package com.algafood.api.controller;
 
+import com.algafood.core.data.PageableTranslator;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.model.Pedido;
@@ -14,6 +15,8 @@ import com.algafood.dto.assembler.PedidoResumoDTOAssembler;
 import com.algafood.dto.filter.PedidoFilter;
 import com.algafood.dto.input.PedidoInput;
 import com.algafood.infrastructure.repository.spec.PedidoSpecs;
+import com.google.common.collect.ImmutableMap;
+import org.aspectj.apache.bcel.classfile.Signature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -45,21 +48,23 @@ public class PedidoController {
     private PedidoDTOInputDissembler pedidoDTOInputDissembler;
 
     @GetMapping
-    public Page<PedidoResumoDTO> pesquisar(@PageableDefault(size = 10) PedidoFilter filtro, Pageable pageable){
+    public Page<PedidoResumoDTO> pesquisar(@PageableDefault(size = 10) PedidoFilter filtro, Pageable pageable) {
+        pageable = traduzirPageable(pageable);
         Page<Pedido> pedidoPage = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro), pageable);
-        List<PedidoResumoDTO> pedidoResumoDTO =  pedidoResumoDTOAssembler.toCollectionModel(pedidoPage.getContent());
+        List<PedidoResumoDTO> pedidoResumoDTO = pedidoResumoDTOAssembler.toCollectionModel(pedidoPage.getContent());
+
         return new PageImpl<>(pedidoResumoDTO, pageable, pedidoPage.getTotalElements());
     }
 
     @GetMapping("/{codigoPedido}")
-    public PedidoDTO buscar(@PathVariable String codigoPedido){
+    public PedidoDTO buscar(@PathVariable String codigoPedido) {
         Pedido pedido = emissaoPedido.buscarPedidoOuFalhar(codigoPedido);
         return pedidoDtoAssembler.toModelDTO(pedido);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PedidoDTO adicionar(@RequestBody @Valid PedidoInput pedidoInput){
+    public PedidoDTO adicionar(@RequestBody @Valid PedidoInput pedidoInput) {
         try {
             Pedido novoPedido = pedidoDTOInputDissembler.toDoMainObject(pedidoInput);
 
@@ -67,9 +72,26 @@ public class PedidoController {
             novoPedido.getCliente().setId(1L);
 
             novoPedido = emissaoPedido.emitir(novoPedido);
-            return  pedidoDtoAssembler.toModelDTO(novoPedido);
-        }catch (EntidadeNaoEncontradaException ex){
+            return pedidoDtoAssembler.toModelDTO(novoPedido);
+        } catch (EntidadeNaoEncontradaException ex) {
             throw new NegocioException(ex.getMessage(), ex);
         }
     }
+
+    private Pageable traduzirPageable(Pageable apiPageable) {
+        var mapeamento = ImmutableMap.of(
+                "codigo", "codigo",
+                "subTotal", "subTotal",
+                "taxaFrete","taxaFrete",
+                "valorTotal","valorTotal",
+                "dataCriacao", "dataCriacao",
+                "restaurante.nome", "restaurante.nome",
+                "restaurante.id", "restaurante.id",
+                "cliente.id", "cliente.id",
+                "cliente.nome", "cliente.nome"
+        );
+
+        return PageableTranslator.translate(apiPageable, mapeamento);
+    }
+
 }

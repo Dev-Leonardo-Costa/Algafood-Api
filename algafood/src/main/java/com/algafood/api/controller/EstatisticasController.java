@@ -1,11 +1,12 @@
 package com.algafood.api.controller;
 
 import com.algafood.domain.service.VendaQueryService;
-import com.algafood.dto.VendaDiariaDTO;
+import com.algafood.dto.VendaDiaria;
 import com.algafood.filter.VendaDiariaFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,8 +19,9 @@ public class EstatisticasController {
     private VendaQueryService vendaQueryService;
 
     @GetMapping("/vendas-diarias")
-    public List<VendaDiariaDTO> consultarVendasDiarias(VendaDiariaFilter filtro){
-        return  vendaQueryService.consultarVendasDiarias(filtro);
+    public List<VendaDiaria> consultarVendasDiarias(
+            VendaDiariaFilter filtro, @RequestParam(required = false, defaultValue = "+00:00") String timeOffSet){
+        return  vendaQueryService.consultarVendasDiarias(filtro, timeOffSet);
     }
 
 }

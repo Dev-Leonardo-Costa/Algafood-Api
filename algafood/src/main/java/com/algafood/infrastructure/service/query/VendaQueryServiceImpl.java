@@ -1,4 +1,4 @@
-package com.algafood.infrastructure.service;
+package com.algafood.infrastructure.service.query;
 
 import com.algafood.domain.model.Pedido;
 import com.algafood.domain.model.enums.StatusPedido;

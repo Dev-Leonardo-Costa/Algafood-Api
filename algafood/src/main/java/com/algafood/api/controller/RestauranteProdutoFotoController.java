@@ -48,8 +48,6 @@ public class RestauranteProdutoFotoController {
         foto.setNomeArquivo(arquivo.getOriginalFilename());
 
         FotoProduto fotoProduto = catalogoFotoProdutoService.salvar(foto);
-
         return assembler.toModelDTO(fotoProduto);
-
     }
 }

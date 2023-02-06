@@ -1,7 +1,7 @@
 package com.algafood.infrastructure.repository;
 
 import com.algafood.domain.model.FotoProduto;
-import com.algafood.domain.repository.ProdutoRepositoryQueries;
+import com.algafood.domain.repository.queries.ProdutoRepositoryQueries;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,5 +18,11 @@ public class ProdutoRepositoryImpl implements ProdutoRepositoryQueries {
     @Override
     public FotoProduto salvar(FotoProduto foto) {
         return manager.merge(foto);
+    }
+
+    @Transactional
+    @Override
+    public void delete(FotoProduto foto) {
+        manager.remove(foto);
     }
 }

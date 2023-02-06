@@ -1,4 +1,4 @@
-package com.algafood.domain.repository;
+package com.algafood.domain.repository.queries;
 
 import java.math.BigDecimal;
 import java.util.List;
